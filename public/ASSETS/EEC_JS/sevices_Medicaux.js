@@ -1,0 +1,9 @@
+document.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('mouseenter',()=>{
+        card.style.transform='scale(1.03)';card.style.boxShadow='010px25pxrgba(0,0,0,0.15)';
+    });
+    card.addEventListener('mouseleave',()=>{
+        card.style.transform='scale(1)';
+        card.style.boxShadow='none';
+    }); 
+});

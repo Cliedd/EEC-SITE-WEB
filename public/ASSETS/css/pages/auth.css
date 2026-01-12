@@ -1,0 +1,58 @@
+body {
+  background-color: #110677;
+  
+}
+#auth {
+  height: 100vh;
+  overflow-x: hidden;
+}
+#auth #auth-right {
+  background: url(../../../assets/images/4853433.png?45649b87e0b3f50bfa1372c6cdb4595f),
+    linear-gradient(90deg, #0b0163, #ffffff);
+  height: 100%;
+}
+#auth #auth-left {
+  padding: 5rem 8rem;
+}
+#auth #auth-left .auth-title {
+  font-size: 40px;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+
+
+}
+#auth #auth-left .auth-subtitle {
+  color: #ffffff;
+  font-size: 1.4rem;
+  line-height: 2.5rem;
+}
+
+#auth #auth-left .auth-logo img {
+  height: 2rem;
+  border-radius: 20%;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0,white alpha);
+}
+
+.auth-logo{
+    margin-bottom: 3rem;
+    border-radius: 20px; 
+    
+}
+@media screen and (max-width: 767px) {
+  #auth #auth-left {
+    padding: 5rem;
+    border-radius: 20px; 
+  }
+}
+@media screen and (max-width: 576px) {
+  #auth #auth-left {
+    padding: 5rem 3rem;
+    border-radius: 20px; 
+  }
+}
+body.theme-dark #auth-right {
+  background: url(../../../assets/images/4853433.png?45649b87e0b3f50bfa1372c6cdb4595f),
+    linear-gradient(90deg, #f3f4f7, #f3f4f5);
+}
