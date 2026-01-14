@@ -1,79 +1,295 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="fr">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>S'inscrire EEC Bafoussam</title>
-  <link rel="shortcut icon" type="image/png" href="../ASSETS/IMAGES/logos/favicon.png" />
-  <link rel="stylesheet" href="../ASSETS/css/styles.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Se Connecter - Centre Médical Protestant de Bafoussam</title>
+  <link rel="stylesheet" href="<?=base_url('ASSETS/responsive-system.css');?>">
+  <style>
+    body {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-md);
+    }
+
+    .login-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      max-width: 450px;
+      width: 100%;
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-header {
+      padding: var(--spacing-lg);
+      text-align: center;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .login-header img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: var(--spacing-md);
+      border-radius: 50%;
+      background: var(--light-bg);
+      padding: var(--spacing-sm);
+    }
+
+    .login-header h2 {
+      color: var(--text-dark);
+      font-size: 1.5rem;
+      margin-bottom: var(--spacing-sm);
+      font-weight: 700;
+    }
+
+    .login-header p {
+      color: var(--text-gray);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .login-body {
+      padding: var(--spacing-lg);
+    }
+
+    .form-group {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: var(--spacing-sm);
+      color: var(--text-dark);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: inherit;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(3, 138, 49, 0.1);
+    }
+
+    .error-message {
+      color: var(--secondary-color);
+      font-size: 0.85rem;
+      margin-top: 5px;
+      display: block;
+    }
+
+    .alert {
+      padding: var(--spacing-md);
+      border-radius: 8px;
+      margin-bottom: var(--spacing-md);
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .alert-success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .alert-danger {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: var(--spacing-md) 0;
+      gap: var(--spacing-md);
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      margin: 0;
+      font-weight: 400;
+      cursor: pointer;
+    }
+
+    .forgot-password {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+
+    .forgot-password:hover {
+      color: #026b25;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 12px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .login-button:hover {
+      background: #026b25;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(3, 138, 49, 0.3);
+    }
+
+    .login-footer {
+      text-align: center;
+      padding-top: var(--spacing-md);
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .login-footer p {
+      color: var(--text-gray);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .login-footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .login-footer a:hover {
+      color: #026b25;
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        margin: var(--spacing-md);
+      }
+
+      .login-header,
+      .login-body {
+        padding: var(--spacing-md);
+      }
+
+      .checkbox-group {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
 </head>
-
 <body>
-  <!--  Body Wrapper -->
-  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-    data-sidebar-position="fixed" data-header-position="fixed">
-    <div
-      class="position-relative overflow-hidden text-bg-light min-vh-100 d-flex align-items-center justify-content-center">
-      <div class="d-flex align-items-center justify-content-center w-100">
-        <div class="row justify-content-center w-100">
-          <div class="col-md-8 col-lg-6 col-xxl-3">
-            <div class="card mb-0">
-              <div class="card-body">
-                <a href="<?=site_url('sinscrire');?>" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                  <img src="../ASSETS/IMAGES/logos/favicon.png" alt="" width="80">CMPB
-                </a>
-                <p class="text-center">Centre Medicale Protestant de Bafoussam</p>
+  <div class="login-container">
+    <!-- Header -->
+    <div class="login-header">
+      <img src="<?=base_url('ASSETS/LOGO/LOGO_SITE.png')?>" alt="Logo CMPB">
+      <h2>Se Connecter</h2>
+      <p>Centre Médical Protestant de Bafoussam</p>
+    </div>
 
-                <?php
-                $validation = $validation ?? \Config\Services::validation();
-                ?>
+    <!-- Body -->
+    <div class="login-body">
+      <?php
+      $validation = $validation ?? \Config\Services::validation();
+      ?>
 
-                <?php if 
-                (session()->getFlashdata('success')) : ?>
-                <div class="alert alert-success text-center">
-                  <?= session()->getFlashdata('success')?></div>
-                  <?php endif; ?>
-                <form method="post" action="<?=base_url('Creer_compte/verifyLogin');?>">
-                  <?= csrf_field()?> 
-                  <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Nom et prenom</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name_surName">
-                    <span class='text-danger'><?= $validation->getError('name_surName')?></span>
-                  </div>
-
-                  <div class="mb-5">
-                    <label for="exampleInputPassword1" class="form-label">Votre mot de passe</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" name="mot_de_passe">
-                    <span class='text-danger'><?= $validation->getError('mot_de_passe')?></span>
-                  </div>
-
-                  <div class="d-flex align-items-center justify-content-between mb-4">
-                    <div class="form-check">
-                      <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" checked>
-                      <label class="form-check-label text-dark" for="flexCheckChecked">
-                        se souvenir de moi
-                      </label>
-                    </div>
-                    <a class="text-primary fw-bold" href="./index.html">mot de passe oublie ?</a>
-                  </div>
-                  <a href="./index.html" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"><button>s'incrire</button></a>
-                  <div class="d-flex align-items-center justify-content-center">
-                    <p class="fs-4 mb-0 fw-bold">Vous etes nouveau?</p>
-                    <a class="text-primary fw-bold ms-2" href="<?=site_url('creer_un_compte');?>">creer un compte</a>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+      <?php if (session()->getFlashdata('success')) : ?>
+      <div class="alert alert-success">
+        <strong>✓</strong> <?= session()->getFlashdata('success') ?>
       </div>
+      <?php endif; ?>
+
+      <?php if (session()->getFlashdata('error')) : ?>
+      <div class="alert alert-danger">
+        <strong>✕</strong> <?= session()->getFlashdata('error') ?>
+      </div>
+      <?php endif; ?>
+
+      <form method="post" action="<?=base_url('Creer_compte/verifyLogin');?>" novalidate>
+        <?= csrf_field() ?>
+
+        <!-- Nom et Prénom -->
+        <div class="form-group">
+          <label for="name_surName">Nom et prénom *</label>
+          <input 
+            type="text" 
+            id="name_surName" 
+            name="name_surName" 
+            placeholder="Votre nom complet"
+            value="<?= old('name_surName') ?>"
+            required>
+          <span class="error-message"><?= $validation->getError('name_surName') ?></span>
+        </div>
+
+        <!-- Mot de passe -->
+        <div class="form-group">
+          <label for="mot_de_passe">Mot de passe *</label>
+          <input 
+            type="password" 
+            id="mot_de_passe" 
+            name="mot_de_passe" 
+            placeholder="••••••••"
+            required>
+          <span class="error-message"><?= $validation->getError('mot_de_passe') ?></span>
+        </div>
+
+        <!-- Checkbox et lien -->
+        <div class="checkbox-group">
+          <label>
+            <input type="checkbox" name="remember_me" value="1" checked>
+            <span>Se souvenir de moi</span>
+          </label>
+          <a href="<?=site_url('creer_un_compte');?>" class="forgot-password">Mot de passe oublié ?</a>
+        </div>
+
+        <!-- Bouton -->
+        <button type="submit" class="login-button">Me Connecter</button>
+      </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="login-footer">
+      <p>Vous êtes nouveau ? <a href="<?=site_url('creer_un_compte');?>">Créer un compte</a></p>
     </div>
   </div>
-  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- solar icons -->
-  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
-</body>
 
+</body>
 </html>

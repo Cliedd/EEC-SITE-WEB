@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- Meta tags essentiels pour le responsive -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="EEC Centre Médical - Votre santé est notre priorité">
+    <meta name="theme-color" content="#2c3e50">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <title>EEC Centre Médical</title>
+
+    <!-- Preconnect pour optimiser le chargement -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+    <!-- Stylesheets dans l'ordre correct -->
+    <link rel="stylesheet" href="<?= base_url('ASSETS/css/responsive-system.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('ASSETS/css/CSS-EEC/responsive-accueil.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('ASSETS/css/CSS-EEC/responsive-forms.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('ASSETS/acceuil.css'); ?>">
+
+    <!-- Icon fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0">
+    <link rel="stylesheet" href="<?= base_url('ASSETS/extensions/bootstrap-icons/font/bootstrap-icons.css'); ?>">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="<?= base_url('favicon.ico'); ?>">
+
+    <!-- Styles additionnels en ligne pour le critical rendering path -->
+    <style>
+        body {
+            visibility: hidden;
+        }
+        .loader {
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOADER - Caché avec CSS -->
+    <div class="loader" id="loader">
+        <p>⏳ Chargement...</p>
+    </div>
+
+    <!-- HEADER RESPONSIVE -->
+    <header class="header top-header">
+        <div class="container-fluid">
+            <div class="header-content">
+                
+                <!-- Logo & Title -->
+                <div class="logo-area">
+                    <img src="<?= base_url('ASSETS/LOGO/LOGO_SITE.png'); ?>" 
+                         alt="Logo EEC Centre Médical" 
+                         loading="lazy"
+                         width="80" 
+                         height="80">
+                    <div class="logo-title title">
+                        <span class="line1">Centre médical protestant</span>
+                        <span class="line2">de Bafoussam</span>
+                    </div>
+                </div>
+
+                <!-- Contact (caché sur mobile) -->
+                <div class="contact-area d-none-sm">
+                    <div class="contact-item">
+                        <span class="icon">📧</span>
+                        <a href="mailto:cmpbafoussam2020@gmail.com" title="Nous contacter par email">
+                            cmpbafoussam2020@gmail.com
+                        </a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon">📞</span>
+                        <a href="tel:+237657281610" title="Nous appeler">
+                            +237 657 28 16 10
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Boutons d'action -->
+                <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap;">
+                    <a href="<?= site_url('creer_un_compte'); ?>" class="btn btn-green d-none-sm">
+                        Créer compte
+                    </a>
+                    <a href="<?= site_url('PrendreRendez_vous'); ?>" class="btn btn-primary">
+                        RDV
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="main-menu">
+            <ul>
+                <li><a href="<?= site_url('acceuil'); ?>" class="active">Accueil</a></li>
+                <li><a href="<?= site_url('a_propos'); ?>">À propos</a></li>
+                <li><a href="<?= site_url('service_medicaux'); ?>">Services</a></li>
+                <li><a href="<?= site_url('espace_peteint'); ?>">Espace patient</a></li>
+                <li><a href="<?= site_url('actualiter'); ?>">Actualités</a></li>
+                <li><a href="<?= site_url('Contact'); ?>">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main style="flex: 1;">
+
+        <!-- Hero Section avec Carousel -->
+        <section class="hero equipements-section">
+            <div class="carousel-container">
+                <div class="carousel" id="carousel">
+                    <!-- Les slides seront insérés par JavaScript -->
+                </div>
+                <button class="arrow left" onclick="prevSlide()" aria-label="Slide précédent">‹</button>
+                <button class="arrow right" onclick="nextSlide()" aria-label="Slide suivant">›</button>
+            </div>
+        </section>
+
+        <!-- Services Grid (Responsive) -->
+        <section class="section-light">
+            <div class="container">
+                <h2 class="text-center font-bold" style="margin-bottom: var(--spacing-xxl);">
+                    Nos Services Médicaux
+                </h2>
+                <div class="services-grid">
+                    <!-- Les services seront injectés dynamiquement -->
+                    <div class="service-card">
+                        <h3>Consultation Générale</h3>
+                        <p>Consultations avec nos médecins généralistes qualifiés</p>
+                        <a href="#" class="btn btn-secondary">En savoir plus</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section style="padding: var(--spacing-xxxl) var(--spacing-md);">
+            <div class="container">
+                <h2 class="text-center font-bold" style="margin-bottom: var(--spacing-xxl);">
+                    Nos Chiffres
+                </h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="number">500+</div>
+                        <div class="label">Patients satisfaits</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="number">50+</div>
+                        <div class="label">Professionnels</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="number">30+</div>
+                        <div class="label">Services</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="number">24/7</div>
+                        <div class="label">Assistance</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="section-dark" style="text-align: center; padding: var(--spacing-xxxl) var(--spacing-md);">
+            <div class="container">
+                <h2 style="color: white; margin-bottom: var(--spacing-lg);">
+                    Prêt à prendre soin de votre santé?
+                </h2>
+                <p style="color: #ecf0f1; font-size: var(--font-size-lg); margin-bottom: var(--spacing-xl); max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Nos équipes sont à votre disposition pour vous offrir les meilleurs soins.
+                </p>
+                <a href="<?= site_url('PrendreRendez_vous'); ?>" class="btn btn-green btn-lg">
+                    Prendre un rendez-vous
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER RESPONSIVE -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+
+                <div class="footer-section">
+                    <h3>À propos</h3>
+                    <ul>
+                        <li><a href="<?= site_url('a_propos'); ?>">Qui sommes-nous</a></li>
+                        <li><a href="#mission">Notre mission</a></li>
+                        <li><a href="#vision">Notre vision</a></li>
+                        <li><a href="#team">Notre équipe</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="<?= site_url('service_medicaux'); ?>">Tous les services</a></li>
+                        <li><a href="#consultation">Consultations</a></li>
+                        <li><a href="#prevention">Prévention</a></li>
+                        <li><a href="#urgences">Urgences</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Patient</h3>
+                    <ul>
+                        <li><a href="<?= site_url('espace_peteint'); ?>">Espace patient</a></li>
+                        <li><a href="#rdv">Prendre RDV</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#conditions">Conditions</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="tel:+237657281610">📞 +237 657 28 16 10</a></li>
+                        <li><a href="mailto:cmpbafoussam2020@gmail.com">📧 Email</a></li>
+                        <li><a href="<?= site_url('Contact'); ?>">📝 Formulaire</a></li>
+                        <li><a href="#localisation">📍 Localisation</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div style="text-align: center; color: var(--color-light); padding: var(--spacing-lg) 0;">
+                <p>&copy; 2026 EEC Centre Médical. Tous droits réservés.</p>
+                <p style="font-size: var(--font-size-sm); margin-top: var(--spacing-md);">
+                    Développé par <strong>Expert Frontend Senior</strong> | Responsive Design
+                </p>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Retirer le loader après le chargement complet
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    loader.style.visibility = 'hidden';
+                    loader.style.transition = 'all 0.3s ease';
+                    document.body.style.visibility = 'visible';
+                }, 500);
+            }
+        });
+
+        // Immediately show body if JS doesn't load
+        document.body.style.visibility = 'visible';
+    </script>
+    <script src="<?= base_url('ASSETS/EEC_JS/acceuil.js'); ?>"></script>
+
+</body>
+</html>

@@ -1,256 +1,434 @@
 <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <title>SITE WEB CMPB</title>
-      <meta name="description" content="The small framework with powerful features">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="shortcut icon" type="image/png" href="/favicon.ico">
-      <link rel="stylesheet" href="<?=base_url('ASSETS/css/CSS-EEC/Contact.css');?>">
-      <script src="<?=base_url('ASSETS/EEC_JS/acceuil.js');?>"></script>
-      <link rel="stylesheet" href="https://font.googleapis.com/css2?family=material+symbols+rounded:opsz,
-      wght,FILL,GRAD@48,400,0,0" />
-      
-    
-      <link rel="stylesheet" href="assets/css/shared/iconly.css">
-      <link rel="stylesheet" href="ASSETS/extensions/@icon/dripicons/dripicons.css">
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact - Centre Médical Protestant de Bafoussam</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="<?=base_url('ASSETS/responsive-system.css');?>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .contact-hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(<?=base_url('ASSETS/IMAGES/img_courvre.PNG');?>);
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: clamp(60px, 15vw, 100px) 20px;
+      text-align: center;
+      margin-bottom: 60px;
+    }
 
-    </head>
-    <body>
+    .contact-hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
 
-      <header>
-         <style>
-          header{
-    background: url(../ASSETS/IMAGES/img_courvre.PNG);
-    height: 300PX;
-    width: 100%;
-    background-repeat: no-repeat;
-    background-size: 100%;
-     border-bottom-left-radius:200px;
-    border-bottom-right-radius:200px;
-}
-       
-        </style>
-        <header class="top-header">
+    .contact-hero p {
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    @media (min-width: 768px) {
+      .contact-wrapper {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .contact-form-section h2 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: var(--text-dark);
+      margin-bottom: 30px;
+      font-weight: 700;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text-dark);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: inherit;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(3, 138, 49, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 150px;
+    }
+
+    .error-message {
+      color: var(--secondary-color);
+      font-size: 0.85rem;
+      margin-top: 5px;
+      display: block;
+    }
+
+    .alert {
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+
+    .alert-danger {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .alert-success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background: #026b25;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(3, 138, 49, 0.3);
+    }
+
+    .contact-info-section {
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 30px;
+    }
+
+    .contact-info-section h2 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: var(--text-dark);
+      margin-bottom: 30px;
+      font-weight: 700;
+    }
+
+    .info-item {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 25px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .info-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .info-icon {
+      flex-shrink: 0;
+      width: 50px;
+      height: 50px;
+      background: var(--primary-color);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .info-content h3 {
+      color: var(--text-dark);
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .info-content p {
+      color: var(--text-gray);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .map-section {
+      margin-top: 60px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .map-section h2 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: var(--text-dark);
+      margin-bottom: 30px;
+      font-weight: 700;
+    }
+
+    .map-section iframe {
+      width: 100%;
+      height: 400px;
+      border: none;
+    }
+
+    @media (max-width: 480px) {
+      .contact-info-section {
+        padding: 20px;
+      }
+
+      .info-item {
+        gap: 15px;
+      }
+
+      .info-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="top-header">
     <div class="header-content">
+      <div class="logo-area">
+        <img src="<?=base_url('ASSETS/LOGO/LOGO_SITE.png')?>" alt="Logo CMP Bafoussam">
+        <div class="title">
+          <span class="line1">Centre médical protestant</span>
+          <span class="line2">de Bafoussam</span>
+        </div>
+      </div>
 
-        <!-- Logo + Nom -->
-        <div class="logo-area">
-            <img src="<?=base_url('ASSETS/LOGO/LOGO_SITE.png')?>" alt="Logo CMP Bafoussam">
-            <div class="title">
-                <span class="line1">Centre médical protestant</span>
-                <span class="line2">de Bafoussam</span>
-            </div>
+      <div class="contact-area">
+        <div class="contact-item">
+          <span class="icon">📧</span>
+          <a href="mailto:cmpbafoussam2020@gmail.com">cmpbafoussam2020@gmail.com</a>
         </div>
 
-        <!-- Contact -->
-        <div class="contact-area">
-            <div class="contact-item">
-                <span class="icon">📧</span>
-                <a href="mailto:cmpbafoussam2020@gmail.com">cmpbafoussam2020@gmail.com</a>
-            </div>
-
-            <div class="contact-item">
-                <span class="icon">📞</span>
-                <a href="tel:+237657281610">+237 657 28 16 10 / 654 23 26 92</a>
-            </div>
+        <div class="contact-item">
+          <span class="icon">📞</span>
+          <a href="tel:+237657281610">+237 657 28 16 10 / 654 23 26 92</a>
         </div>
+      </div>
     </div>
 
-    <!-- Menu -->
     <nav class="main-menu">
-        <ul>
-                 <li><a href="<?=site_url('acceuil');?>">Acceuil</a></li>
-                  <li><a href="<?=site_url('a_propos');?>">A Propos</a></li>
-                 <li> <a href="<?=site_url('service_medicaux');?>">Services Médicaux</a></li>
-                  <li><a href="<?=site_url('espace_peteint');?>">Espace patient</a></li>
-                  <li><a href="<?=site_url('actualiter');?>">Actualités</a></li>
-                  <li><a href="<?=site_url('Contact');?>">Contact</a></li>
-        </ul>
+      <ul>
+        <li><a href="<?=site_url('acceuil');?>">Accueil</a></li>
+        <li><a href="<?=site_url('a_propos');?>">À Propos</a></li>
+        <li><a href="<?=site_url('service_medicaux');?>">Services Médicaux</a></li>
+        <li><a href="<?=site_url('espace_peteint');?>">Espace patient</a></li>
+        <li><a href="<?=site_url('Contact');?>">Contact</a></li>
+      </ul>
     </nav>
 
     <div class="header-btns">
-          <a class="btn btn-green" href="<?=site_url('sinscrire');?>">S'inscrire</a>
-        </div>
+      <a class="btn btn-green" href="<?=site_url('sinscrire');?>">S'inscrire</a>
+      <a class="btn btn-light" href="<?=site_url('PrendreRendez_vous');?>">Prendre rendez-vous</a>
+    </div>
+  </header>
 
-        <div class="header_button1">
-            <a class="main-title1" >CONTACT</a>
-        </div>
+  <!-- Hero Section -->
+  <div class="contact-hero">
+    <h1>Nous Contacter</h1>
+    <p>Le Centre Médical Protestant de Bafoussam reste à votre entière disposition afin de vous offrir des soins de qualité. Remplissez le formulaire ci-dessous et nous vous répondrons rapidement.</p>
+  </div>
 
-
-       
-      </header>
-
-      <!--------------------------contact section--------------------------------------------------------->
-
-      <section class="contact-section">
-
-    <h5 class="sub-title">VOTRE AVIS COMPTE</h5>
-    <h1 class="main-title">Restez connectés</h1>
-
-    <p class="description">
-        Le Centre Medical Protestant de Bafoussam reste à votre entière disposition afin de vous 
-        offrir des soins de qualité. Veuillez remplir le formulaire suivant pour toutes autres informations 
-        complémentaires ou en savoir plus sur les dispositions à prendre avant votre arrivée dans la structure.
-    </p>
-
-    <div class="contact-container">
-      <?php
+  <!-- Main Content -->
+  <main class="container">
+    <div class="contact-wrapper">
+      <!-- Contact Form -->
+      <div class="contact-form-section">
+        <h2>Formulaire de Contact</h2>
+        
+        <?php
         $validation = $validation ?? \Config\Services::validation();
-      ?>
-         
-         <?php if(isset($validation)):?>
-         <div class='alert alert-danger'><?= $validation->listErrors();?></div>
-         <?php endif; ?> 
-         
-        <form class="contact-form" method="post" action="<?=base_url('ContactController');?>">
-            <input type="text" placeholder="Noms">
-            <span class='text-danger'><?= $validation->getError('name_surName')?></span>
-            <div class="row">
-                <input type="email" placeholder="Adresse email">
-                <span class='text-danger'><?= $validation->getError('email')?></span>
-                <input type="text" placeholder="Telephone">
-                <span class='text-danger'><?= $validation->getError('telephone')?></span>
-            </div>
-            <input type="text" placeholder="Objet">
-            <span class='text-danger'><?= $validation->getError('Objet')?></span>
-            <textarea placeholder="Message"></textarea>
-            <span class='text-danger'><?= $validation->getError('msg')?></span>
+        ?>
 
-            <button type="submit" class="btn_form">
-                Envoyer
-            </button>
+        <?php if(isset($validation) && $validation->listErrors()): ?>
+        <div class="alert alert-danger">
+          <?= $validation->listErrors() ?>
+        </div>
+        <?php endif; ?>
+
+        <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success">
+          ✓ Votre message a été envoyé avec succès. Nous vous répondrons dès que possible.
+        </div>
+        <?php endif; ?>
+
+        <form method="post" action="<?=base_url('ContactController');?>" novalidate>
+          <?= csrf_field() ?>
+
+          <div class="form-group">
+            <label for="name">Nom et Prénom *</label>
+            <input type="text" id="name" name="name_surName" placeholder="Votre nom complet" value="<?= old('name_surName') ?>" required>
+            <span class="error-message"><?= $validation->getError('name_surName') ?></span>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Adresse Email *</label>
+            <input type="email" id="email" name="email" placeholder="exemple@email.com" value="<?= old('email') ?>" required>
+            <span class="error-message"><?= $validation->getError('email') ?></span>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Téléphone *</label>
+            <input type="tel" id="phone" name="telephone" placeholder="+237 XXX XXX XXX" value="<?= old('telephone') ?>" required>
+            <span class="error-message"><?= $validation->getError('telephone') ?></span>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Objet *</label>
+            <input type="text" id="subject" name="Objet" placeholder="Objet de votre message" value="<?= old('Objet') ?>" required>
+            <span class="error-message"><?= $validation->getError('Objet') ?></span>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="msg" placeholder="Votre message..." required><?= old('msg') ?></textarea>
+            <span class="error-message"><?= $validation->getError('msg') ?></span>
+          </div>
+
+          <button type="submit" class="submit-btn">Envoyer le Message</button>
         </form>
+      </div>
 
-        <div class="map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3971.8855825873397!2d10.416488374039936!3d5.4343445348630075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x105f903635e7245b%3A0x119da109408bedc0!2sEEC%20Mbouo!5e0!3m2!1sfr!2scm!4v1763802348350!5m2!1sfr!2scm" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-        
+      <!-- Contact Info -->
+      <div class="contact-info-section">
+        <h2>Informations</h2>
 
-    </div>
-
-</section>
-<!--------------------------- contact card--------------------------------------------------------->
-  <section class="contact-sectionCard">
-    <div class="contact-card">
-      <div class="contact-grid">
-        <!-- Bloc 1 -->
-        <div class="contact-item">
-          <div class="icon-wrap" aria-hidden="true">
-            <svg viewBox="0 0 24 24" class="icon">
-              <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 11.5V7h-2v6h5v-2h-3z" />
-            </svg>
-            
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fa-solid fa-clock"></i>
           </div>
-          <h3>Heures d'ouverture:</h3>
-          <p class="muted">Heures D'ouverture:24H/24,7J/7 pour tous vos problèmes de santé</p>
+          <div class="info-content">
+            <h3>Heures d'ouverture</h3>
+            <p>24H/24, 7J/7 pour tous vos problèmes de santé</p>
+          </div>
         </div>
 
-        <!-- Bloc 2 -->
-        <div class="contact-item">
-          <div class="icon-wrap" aria-hidden="true">
-            <svg viewBox="0 0 24 24" class="icon">
-              <path d="M4 3h16v18H4V3zm2 2v4h4V5H6zm6 0v4h4V5h-4zM6 11v6h12v-6H6z" />
-            </svg>
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fa-solid fa-location-dot"></i>
           </div>
-          <h3>Adresse principale:</h3>
-          <p class="muted">Situé avant le stade omnisport Kouekong - Bafoussam</p>
+          <div class="info-content">
+            <h3>Adresse</h3>
+            <p>Situé avant le stade omnisport Kouekong - Bafoussam</p>
+          </div>
         </div>
 
-        <!-- Bloc 3 -->
-        <div class="contact-item">
-          <div class="icon-wrap" aria-hidden="true">
-            <svg viewBox="0 0 24 24" class="icon">
-              <path d="M20 6H4l8 6 8-6zm0 2.5-8 6-8-6V18h16V8.5z" />
-            </svg>
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fa-solid fa-envelope"></i>
           </div>
-          <h3>Email:</h3>
-          <p class="muted">cmpbafoussam2020@gmail.com</p>
+          <div class="info-content">
+            <h3>Email</h3>
+            <p><a href="mailto:cmpbafoussam2020@gmail.com">cmpbafoussam2020@gmail.com</a></p>
+          </div>
         </div>
 
-        <!-- Bloc 4 -->
-        <div class="contact-item">
-          <div class="icon-wrap" aria-hidden="true">
-            <svg viewBox="0 0 24 24" class="icon">
-              <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.07 21 3 13.93 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.24 1.01l-2.21 2.21z"/>
-            </svg>
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fa-solid fa-phone"></i>
           </div>
-          <h3>Téléphone:</h3>
-          <p class="muted">(+237):699573569/
-            654395887/676326</p>
+          <div class="info-content">
+            <h3>Téléphone</h3>
+            <p><a href="tel:+237699573569">(+237) 699 573 569 / 654 395 887 / 676 326</a></p>
+          </div>
         </div>
       </div>
     </div>
-  </section>
 
+    <!-- Map Section -->
+    <div class="map-section">
+      <h2>Notre Localisation</h2>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3971.8855825873397!2d10.416488374039936!3d5.4343445348630075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x105f903635e7245b%3A0x119da109408bedc0!2sEEC%20Mbouo!5e0!3m2!1sfr!2scm!4v1763802348350!5m2!1sfr!2scm" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </main>
 
-      
-    <!--------------------------footer--------------------------------------------------------->
-
+  <!-- Footer -->
   <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="col logo-col">
-        <div class="logo-wrap">
-          <img src="<?=base_url()?>ASSETS/LOGO/LOGO_SITE.png"ALT="LOGO"CLASS="LOGO"/>
+    <div class="container">
+      <div class="grid grid-4">
+        <div class="footer-col">
+          <div class="logo-wrap">
+            <img src="<?=base_url()?>ASSETS/LOGO/LOGO_SITE.png" alt="LOGO" class="footer-logo"/>
+          </div>
+          <div class="stay-connected">
+            <p class="small-title">Restez connectés</p>
+            <div class="socials">
+              <a href="#" aria-label="Facebook" class="social"><i class="fab fa-facebook"></i></a>
+              <a href="#" aria-label="YouTube" class="social"><i class="fab fa-youtube"></i></a>
+              <a href="#" aria-label="LinkedIn" class="social"><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
         </div>
 
-        <div class="stay-connected">
-          <p class="small-title">Restez connectés</p>
-          <div class="socials">
-            <a href="#" aria-label="Facebook" class="social"></a>
-            <a href="#" aria-label="YouTube" class="social"></a>
-            <a href="#" aria-label="LinkedIn" class="social"></a>
+        <div class="footer-col">
+          <h3 class="col-title">Nos Services</h3>
+          <ul class="footer-list">
+            <li><a href="<?=site_url('service_medicaux');?>">Services Médicaux</a></li>
+            <li><a href="<?=site_url('service_medicaux');?>">Consultations</a></li>
+            <li><a href="<?=site_url('service_medicaux');?>">Hospitalisation</a></li>
+            <li><a href="<?=site_url('service_medicaux');?>">Urgences</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3 class="col-title">Contact</h3>
+          <p><i class="fa-solid fa-phone"></i> (+237) 699 573 569 / 654 395 887</p>
+          <p><i class="fa-solid fa-envelope"></i> cmpbafoussam2020@gmail.com</p>
+          <p><i class="fa-solid fa-clock"></i> 24H/24, 7J/7</p>
+        </div>
+
+        <div class="footer-col">
+          <h3 class="col-title">Actions Rapides</h3>
+          <div class="footer-actions">
+            <a href="<?=site_url('PrendreRendez_vous');?>" class="btn btn-small btn-green">Rendez-vous</a>
+            <a href="<?=site_url('sinscrire');?>" class="btn btn-small btn-green">S'inscrire</a>
           </div>
         </div>
       </div>
 
-      <div class="col services-col">
-        <h3 class="col-title">HOSPITALISATION</h3>
-        <ul class="services-list">
-          <li>Pédiatrie/ Néonatologie</li>
-          <li>Obdtétrique/ Gynécologie</li>
-          <li>Chirugie générale</li>
-          <li>Medecine interne</li>
-          <li>Neurologie</li>
-          <li>Réanimation</li>
-          <li>Kinésithérapie</li>
-          <li>Nutrition</li>
-          <li>Echographie</li>
-          <li>Laboratoire</li>
-          <li>UPEC</li>
-          <li>Vaccination</li>
-        </ul>
-      </div>
-
-      <div class="col contact-col">
-        <h3 class="col-title">CONTACTE INFO</h3>
-        <p><img src="<?=base_url()?>ASSETS/extensions/@icon/dripicons/icons/phone.svg" ALT="">(+237) : 699 573 569 / 654 395 887 / 676 326</p>
-        <p><img src="<?=base_url()?>ASSETS/extensions/@icon/dripicons/icons/mail.svg" ALT="">cmpbafoussam2020@gmail.com</p>
-        <p><img src="<?=base_url()?>ASSETS/extensions/@icon/dripicons/icons/clock.svg" ALT="">24H/24, 7J/7</p>
-      </div>
-        
-      <div class="col newsletter-col">
-        <h3 class="col-title">NEWSLETTER</h3>
-        <p>Restez au courant de nos dernières nouvelles et de nos derniers produits.</p>
-        <DIV CLASS="BTNS">
-        <BUTTON CLASS="BTN-APPOINTMENT"><a href="<?=site_url('PrendreRendez_vous');?>">PRENDRE RENDEZ-VOUS</a> </BUTTON>
-        <BUTTON CLASS="BTN-SUBSCRIBE"><a href="<?=site_url('sinscrire');?>">S'INSCRIRE</a> </BUTTON>
-      </DIV>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Centre Médical Protestant de Bafoussam. Tous droits réservés.</p>
       </div>
     </div>
-
   </footer>
-  <!--------------------------footer2--------------------------------------------------------->
 
-<FOOTER CLASS="SITE-FOOTER2">
-  <DIV CLASS="footer-innercontainer">
-
-  <DIV CLASS="COPYRIGHT">
-    ©2025 CENTRE MÉDICAL PROTESTANT DE BAFOUSSAM.TOUS DROIT SRÉSERVÉS.
-
-
-  </DIV>
-  </DIV>
-
-  </body>
+</body>
 </html>

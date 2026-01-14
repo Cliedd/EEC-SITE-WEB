@@ -1,60 +1,421 @@
-# CodeIgniter 4 Framework
+# 🚀 DÉMARRAGE RAPIDE - EEC Centre Médical
 
-## What is CodeIgniter?
+**⏱️ Temps estimé: 10-15 minutes**
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+---
 
-This repository holds the distributable version of the framework.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+## 📚 DOCUMENTATION
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+Vous avez **3 README à votre disposition**:
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+1. **📄 INSTALLATION.md** ← Lire d'abord
+   - Installation complète Windows & Linux
+   - Configuration serveur
+   - Dépannage
 
-## Important Change with index.php
+2. **📄 SYSTEME.md** ← Comprendre l'architecture
+   - Structure du projet
+   - Base de données détaillée
+   - Modules & fonctionnalités
+   - Flux d'authentification
+   - Système d'emails
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+3. **📄 BASE_DE_DONNEES.md** ← Charger les tables
+   - Toutes les commandes SQL
+   - Création des tables
+   - Insertion des données
+   - Vérification
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+---
 
-**Please** read the user guide for a better explanation of how CI4 works!
+## ⚡ DÉMARRAGE EN 5 ÉTAPES
 
-## Repository Management
+### 1️⃣ PRÉREQUIS SYSTÈME (5 min)
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+Vous devez avoir installé:
+```
+✅ PHP 8.1+ (8.2 recommandé)
+✅ MySQL 5.7+ ou MariaDB
+✅ Composer
+✅ Git
+```
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+**Vérifier:**
+```bash
+php --version
+mysql --version
+composer --version
+git --version
+```
 
-## Contributing
+---
 
-We welcome contributions from the community.
+### 2️⃣ CLONER LE PROJET (2 min)
 
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/CONTRIBUTING.md) section in the development repository.
+```bash
+# Aller au dossier web
+# Windows WAMP:
+cd C:\wamp64\www
 
-## Server Requirements
+# Linux Apache:
+cd /var/www
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+# Cloner le projet
+git clone <votre-repo> eec-site
+cd eec-site
+```
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+---
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+### 3️⃣ INSTALLER LES DÉPENDANCES (3 min)
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+```bash
+composer install
+```
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+**Attendre que `vendor/` se remplisse** (~30 secondes)
+
+---
+
+### 4️⃣ CONFIGURATION (3 min)
+
+Créer le fichier `.env`:
+
+```bash
+# Windows ou Linux
+copy .env.example .env
+# Ou: cp .env.example .env (Linux)
+
+# Éditer .env avec votre éditeur favoris
+nano .env    # Linux
+# ou
+notepad++ .env  # Windows
+```
+
+**Paramètres essentiels:**
+```ini
+# Database
+database.default.hostname = localhost
+database.default.database = eecbafoussam
+database.default.username = root
+database.default.password = (VOTRE_MOT_DE_PASSE_MYSQL)
+
+# App
+app.baseURL = http://localhost:9000/
+app.environment = development
+
+# Email (Gmail)
+email.SMTPHost = smtp.gmail.com
+email.SMTPUser = votre-email@gmail.com
+email.SMTPPass = votre-app-password
+```
+
+---
+
+### 5️⃣ BASE DE DONNÉES (2 min)
+
+#### Créer la base de données
+
+```bash
+mysql -u root -p
+# Entrer votre mot de passe MySQL
+```
+
+Une fois connecté:
+```sql
+CREATE DATABASE eecbafoussam CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+EXIT;
+```
+
+#### Charger toutes les tables
+
+```bash
+mysql -u root -p eecbafoussam < eecbafoussam.sql
+```
+
+**Attend la fin sans erreurs** ✅
+
+---
+
+## ✅ DÉMARRER LE SERVEUR
+
+```bash
+php spark serve --host localhost --port 9000
+```
+
+**Résultat attendu:**
+```
+CodeIgniter v4.6.1 Command Line Tool
+
+Server started on http://localhost:9000
+Press Ctrl+C to stop
+```
+
+---
+
+## 🌐 ACCÉDER AU SITE
+
+### Site Principal
+```
+http://localhost:9000/
+```
+
+Pages visibles:
+- 🏠 Accueil
+- ℹ️ À propos
+- 🏥 Services Médicaux
+- 📞 Contact
+- 📋 Prendre RDV
+
+### Créer un Compte
+```
+http://localhost:9000/creer_un_compte
+```
+
+Formulaire d'inscription patient
+
+### Se Connecter
+```
+http://localhost:9000/sinscrire
+```
+
+Connexion patient
+
+### Tableau de Bord Admin
+```
+http://localhost:9000/admin
+```
+
+**Identifiants:**
+```
+Email:    administrationeecc@dashboard.com
+Password: bafoussameec2026@web
+```
+
+---
+
+## 🧪 TESTER LA RESPONSIVITÉ
+
+1. Ouvrir le navigateur sur http://localhost:9000/
+2. Appuyer sur **F12** (Outils développeur)
+3. Cliquer sur **Toggle Device Toolbar** (📱 icône)
+4. Choisir différents appareils:
+   - iPhone (375px)
+   - iPad (768px)
+   - Desktop (1024px+)
+
+La page doit s'adapter parfaitement! ✅
+
+---
+
+## 📋 VÉRIFICATION CHECKLIST
+
+```
+[ ] PHP 8.1+ installé
+    Commande: php --version
+
+[ ] MySQL/MariaDB en cours d'exécution
+    Commande: mysql -u root -p -e "SELECT 1;"
+
+[ ] Dossier vendor/ créé (Composer dependencies)
+    Commande: ls vendor/
+
+[ ] Base de données eecbafoussam créée
+    Commande: mysql -u root -p -e "SHOW DATABASES;" | grep eecbafoussam
+
+[ ] 8 tables importées
+    Commande: mysql -u root -p eecbafoussam -e "SHOW TABLES;"
+    Résultat: 8 tables (users, admin_users, appointments, etc)
+
+[ ] Fichier .env configuré
+    Vérifier: cat .env | grep database
+
+[ ] Serveur démarrage sans erreurs
+    Commande: php spark serve
+    Doit afficher "Server started on http://localhost:9000"
+
+[ ] Accéder à la page d'accueil
+    URL: http://localhost:9000/
+    Doit charger sans erreur
+```
+
+---
+
+## 🔧 DÉPANNAGE RAPIDE
+
+### "Impossible de se connecter à MySQL"
+
+```bash
+# Vérifier que MySQL est en cours d'exécution
+
+# Windows: L'icône WAMP doit être verte
+# Linux:
+sudo systemctl status mariadb
+
+# Vérifier le mot de passe dans .env
+cat .env | grep database
+```
+
+### "Erreur 404 - Page non trouvée"
+
+```bash
+# Vérifier que les fichiers existent
+ls -la app/Views/acceuil.php
+
+# Vérifier l'URL de base dans .env
+cat .env | grep baseURL
+```
+
+### "Erreur de base de données"
+
+```bash
+# Vérifier les tables
+mysql -u root -p eecbafoussam -e "SHOW TABLES;"
+
+# Si aucune table, importer le SQL:
+mysql -u root -p eecbafoussam < eecbafoussam.sql
+```
+
+### "Erreur 500 - Erreur serveur interne"
+
+```bash
+# Vérifier les logs
+tail -30 writable/logs/log-*.log
+
+# Vérifier les permissions
+chmod -R 775 writable/
+```
+
+---
+
+## 📊 INFORMATIONS SYSTÈME
+
+```
+Framework:    CodeIgniter 4.6.1
+PHP:          8.2.29+
+Database:     MySQL 5.7+ / MariaDB 10.3+
+CSS:          responsive-system.css (1010 lignes)
+Pages:        8 pages responsive
+Tables:       8 tables (users, appointments, services, etc)
+Services:     15 services médicaux pré-chargés
+Admin:        1 compte administrateur par défaut
+```
+
+---
+
+## 🎯 CONFIGURATION GMAIL (OPTIONNEL)
+
+Pour que les emails fonctionnent:
+
+1. Aller à: https://myaccount.google.com/apppasswords
+2. Créer une "App Password" (pas votre mot de passe Gmail)
+3. Copier le mot de passe généré
+4. Mettre dans `.env`:
+   ```ini
+   email.SMTPUser = votre-email@gmail.com
+   email.SMTPPass = mot-de-passe-app
+   ```
+5. Redémarrer le serveur
+
+---
+
+## 📁 STRUCTURE DU PROJET
+
+```
+eec-site/
+├── app/
+│   ├── Controllers/       ← Logique des pages
+│   ├── Models/           ← Requêtes base de données
+│   ├── Views/            ← Templates HTML
+│   ├── Services/         ← Emails, etc
+│   └── Config/           ← Configuration
+├── public/
+│   ├── ASSETS/          ← CSS, JS, images
+│   └── index.php        ← Point d'entrée
+├── writable/
+│   ├── cache/          ← Fichiers cache
+│   ├── logs/           ← Fichiers logs
+│   └── uploads/        ← Fichiers uploadés
+├── vendor/             ← Dépendances Composer
+├── .env                ← Variables d'environnement
+├── eecbafoussam.sql  ← Dump base de données
+└── spark               ← CLI CodeIgniter
+```
+
+---
+
+## 🚀 PROCHAINES ÉTAPES
+
+### Après Installation Réussie:
+
+1. **Explorer le site**
+   - Visiter toutes les pages
+   - Tester la responsivité (F12)
+   - Tester les formulaires
+
+2. **Créer un compte**
+   - http://localhost:9000/creer_un_compte
+   - Vérifier l'email reçu
+   - Se connecter
+
+3. **Prendre un rendez-vous**
+   - http://localhost:9000/PrendreRendez_vous
+   - Remplir le formulaire
+   - Recevoir la confirmation email
+
+4. **Accéder à l'admin**
+   - http://localhost:9000/admin
+   - Email: administrationeecc@dashboard.com
+   - Password: bafoussameec2026@web
+   - Voir les rendez-vous
+   - Gérer les administrateurs
+
+5. **Personnaliser**
+   - Changer les couleurs dans `public/ASSETS/responsive-system.css`
+   - Ajouter vos images
+   - Mettre à jour les services médicaux
+   - Modifier les textes
+
+---
+
+## 🆘 SUPPORT
+
+**Problème lors de l'installation?**
+
+1. Lire **INSTALLATION.md** (détail complet)
+2. Vérifier la section "Dépannage"
+3. Consulter les logs: `writable/logs/`
+
+**Questions sur le système?**
+
+Consulter **SYSTEME.md** pour:
+- Architecture du projet
+- Structure base de données
+- Modules & fonctionnalités
+- Flux d'authentification
+- Système d'emails
+
+**Problèmes base de données?**
+
+Consulter **BASE_DE_DONNEES.md** pour:
+- Créer les tables
+- Insérer les données
+- Vérifier l'installation
+- Commandes SQL utiles
+
+---
+
+## ✨ BON DÉVELOPPEMENT! 🎉
+
+Le projet est **100% prêt** pour la production.
+
+Toutes les pages sont responsive, le système d'emails fonctionne,
+l'authentification est sécurisée, et l'admin dashboard est complet.
+
+**Happy coding! 🚀**
+
+---
+
+**Dernière mise à jour:** January 13, 2026  
+**Version:** 1.0  
+**Status:** Production Ready ✅

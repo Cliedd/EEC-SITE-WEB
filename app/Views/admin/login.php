@@ -4,29 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion Administrateur - EEC Centre Médical</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Système Responsive Professionnel -->
+    <link rel="stylesheet" href="<?=base_url('ASSETS/responsive-system.css');?>">
+
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --success-color: #27ae60;
-            --danger-color: #e74c3c;
-            --light-bg: #ecf0f1;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        /* Styles spécifiques à la page de connexion */
+        .login-page {
             min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: var(--spacing-md);
         }
 
         .login-container {
@@ -36,18 +26,312 @@
             overflow: hidden;
             max-width: 450px;
             width: 100%;
-            margin: 20px;
+            animation: fadeInUp 0.6s ease-out;
         }
 
         .login-header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
-            padding: 40px 20px;
+            padding: var(--spacing-xl) var(--spacing-lg);
             text-align: center;
         }
 
+        .login-header .logo {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
         .login-header h1 {
-            font-size: 28px;
+            font-size: 1.75rem;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 600;
+        }
+
+        .login-header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .login-body {
+            padding: var(--spacing-xl);
+        }
+
+        .secure-info {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .secure-info strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .secure-info span {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(3, 138, 49, 0.1);
+            outline: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: var(--spacing-md);
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .login-btn:hover {
+            background: #027a28;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(3, 138, 49, 0.3);
+        }
+
+        .login-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .forgot-password a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            margin-bottom: var(--spacing-lg);
+            border: none;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: var(--spacing-xs);
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-container {
+                margin: var(--spacing-sm);
+                max-width: none;
+            }
+
+            .login-header {
+                padding: var(--spacing-lg) var(--spacing-md);
+            }
+
+            .login-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .login-body {
+                padding: var(--spacing-lg);
+            }
+
+            .form-group input {
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-page">
+        <div class="login-container">
+            <!-- Header -->
+            <div class="login-header">
+                <div class="logo">🔐</div>
+                <h1>Dashboard Admin</h1>
+                <p>EEC Centre Médical</p>
+            </div>
+
+            <!-- Body -->
+            <div class="login-body">
+                <!-- Messages d'erreur/succès -->
+                <?php if (session()->has('error')): ?>
+                    <div class="alert alert-danger">
+                        <strong>❌ Erreur!</strong> <?= session()->getFlashdata('error'); ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->has('success')): ?>
+                    <div class="alert alert-success">
+                        <strong>✓ Succès!</strong> <?= session()->getFlashdata('success'); ?>
+                    </div>
+                <?php endif; ?>
+
+                <!-- Formulaire de connexion -->
+                <form method="POST" action="<?= base_url('auth/authenticate'); ?>" id="loginForm">
+                    <?= csrf_field(); ?>
+
+                    <!-- Info sécurité -->
+                    <div class="secure-info">
+                        <strong>🔒 Accès Sécurisé</strong>
+                        <span>Réservé aux administrateurs du site</span>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email">
+                            📧 Adresse Email
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Entrez votre email"
+                            value="<?= old('email'); ?>"
+                            required
+                            autocomplete="email"
+                        >
+                        <?php if (isset($errors['email'])): ?>
+                            <div class="error-message show"><?= $errors['email']; ?></div>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Mot de passe -->
+                    <div class="form-group">
+                        <label for="mot_de_passe">
+                            🔑 Mot de Passe
+                        </label>
+                        <input
+                            type="password"
+                            id="mot_de_passe"
+                            name="mot_de_passe"
+                            placeholder="Entrez votre mot de passe"
+                            required
+                            autocomplete="current-password"
+                        >
+                        <?php if (isset($errors['mot_de_passe'])): ?>
+                            <div class="error-message show"><?= $errors['mot_de_passe']; ?></div>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Bouton connexion -->
+                    <button type="submit" class="login-btn" id="loginBtn">
+                        🔓 Se Connecter
+                    </button>
+
+                    <!-- Mot de passe oublié -->
+                    <div class="forgot-password">
+                        <a href="<?= base_url('auth/forgot-password'); ?>">Mot de passe oublié ?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript pour améliorer l'expérience utilisateur
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('loginForm');
+            const loginBtn = document.getElementById('loginBtn');
+
+            // Validation en temps réel
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('mot_de_passe');
+
+            function validateForm() {
+                const email = emailInput.value.trim();
+                const password = passwordInput.value.trim();
+
+                const isValid = email !== '' && password !== '' && email.includes('@');
+                loginBtn.disabled = !isValid;
+
+                return isValid;
+            }
+
+            emailInput.addEventListener('input', validateForm);
+            passwordInput.addEventListener('input', validateForm);
+
+            // Soumission du formulaire
+            form.addEventListener('submit', function(e) {
+                loginBtn.disabled = true;
+                loginBtn.textContent = '🔄 Connexion en cours...';
+            });
+
+            // Initial validation
+            validateForm();
+        });
+    </script>
+</body>
+</html>
             font-weight: 700;
             margin-bottom: 10px;
         }

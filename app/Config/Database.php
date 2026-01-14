@@ -23,6 +23,12 @@ class Database extends Config
      * The default database connection.
      *
      * @var array<string, mixed>
+     * 
+     * CONFIGURATION MARIADB - Debian 12
+     * Database: eecbafoussam
+     * Server: MariaDB 10.11.14
+     * Charset: UTF8MB4 (support complet Unicode)
+     * Collation: utf8mb4_general_ci (case-insensitive)
      */
     public array $default = [
         'DSN'          => '',
@@ -30,7 +36,7 @@ class Database extends Config
         'username'     => 'root',
         'password'     => '',
         'database'     => 'eecbafoussam',
-        'DBDriver'     => 'MySQLi',
+        'DBDriver'     => 'MySQLi',  // Compatible MariaDB
         'DBPrefix'     => '',
         'pConnect'     => false,
         'DBDebug'      => true,

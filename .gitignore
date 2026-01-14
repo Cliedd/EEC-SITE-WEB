@@ -1,0 +1,43 @@
+<< 'EOF'
+# Dépendances
+vendor/
+node_modules/
+composer.lock
+
+# Configuration sensible
+.env
+.env.local
+.env.*.local
+
+# Fichiers temporaires
+writable/cache/*
+writable/logs/*
+writable/session/*
+writable/debugbar/*
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Uploads temporaires
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Fichiers de test
+coverage/
+.phpunit.result.cache
+
+# Backups
+*.sql.bak
+*.backup
+EOF
+```
