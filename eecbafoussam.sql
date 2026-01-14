@@ -26,24 +26,23 @@ USE `eecbafoussam`;
 -- Utilisée pour: Inscription, authentification, profils patients
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS `login` (
-  `idlogin` INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Identifiant unique',
-  `name_surName` VARCHAR(100) NOT NULL COMMENT 'Nom et prénom du patient',
-  `email` VARCHAR(100) NOT NULL UNIQUE COMMENT 'Email unique du patient',
-  `telephone` VARCHAR(20) NOT NULL COMMENT 'Numéro de téléphone',
-  `mot_de_passe` VARCHAR(255) NOT NULL COMMENT 'Mot de passe hashé (bcrypt)',
-  `Date-creation` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Date de création du compte',
-  `Date-modification` DATETIME NULL COMMENT 'Date de la dernière modification',
-  `Date-logout` DATETIME NULL COMMENT 'Date de la dernière déconnexion',
-  `actif` TINYINT DEFAULT 1 COMMENT '1=actif, 0=inactif',
-  `email_verified` TINYINT DEFAULT 0 COMMENT '1=vérifié, 0=non vérifié',
+  `idlogin` INT AUTO_INCREMENT PRIMARY KEY,
+  `name_surName` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NOT NULL UNIQUE,
+  `telephone` VARCHAR(20) NOT NULL,
+  `mot_de_passe` VARCHAR(255) NOT NULL,
+  `date_creation` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `date_modification` DATETIME NULL,
+  `date_logout` DATETIME NULL,
+  `actif` TINYINT DEFAULT 1,
+  `email_verified` TINYINT DEFAULT 0,
   
-  -- INDEX pour optimiser les recherches
   KEY `idx_email` (`email`),
-  KEY `idx_date_creation` (`Date-creation`),
+  KEY `idx_date_creation` (`date_creation`),
   KEY `idx_actif` (`actif`),
   
   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-) COMMENT='Table des comptes patients';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =====================================================================
 -- TABLE 2: admin_users
@@ -51,23 +50,22 @@ CREATE TABLE IF NOT EXISTS `login` (
 -- Utilisée pour: Gestion du système, dashboard admin, modération
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS `admin_users` (
-  `id_admin` INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Identifiant unique admin',
-  `email` VARCHAR(100) NOT NULL UNIQUE COMMENT 'Email unique administrateur',
-  `mot_de_passe` VARCHAR(255) NOT NULL COMMENT 'Mot de passe hashé (bcrypt)',
-  `nom` VARCHAR(100) NOT NULL COMMENT 'Nom de l\'administrateur',
-  `role` VARCHAR(50) DEFAULT 'admin' COMMENT 'Rôle: super_admin, admin, moderator',
-  `date_creation` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Date de création du compte',
-  `date_modification` DATETIME NULL COMMENT 'Date de la dernière modification',
-  `actif` TINYINT DEFAULT 1 COMMENT '1=actif, 0=inactif (suspendu)',
-  `derniere_connexion` DATETIME NULL COMMENT 'Date de la dernière connexion',
+  `id_admin` INT AUTO_INCREMENT PRIMARY KEY,
+  `email` VARCHAR(100) NOT NULL UNIQUE,
+  `mot_de_passe` VARCHAR(255) NOT NULL,
+  `nom` VARCHAR(100) NOT NULL,
+  `role` VARCHAR(50) DEFAULT 'admin',
+  `date_creation` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `date_modification` DATETIME NULL,
+  `actif` TINYINT DEFAULT 1,
+  `derniere_connexion` DATETIME NULL,
   
-  -- INDEX pour optimiser les recherches
   KEY `idx_email` (`email`),
   KEY `idx_actif` (`actif`),
   KEY `idx_role` (`role`),
   
   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-) COMMENT='Table des administrateurs';
+);
 
 -- =====================================================================
 -- TABLE 3: services
@@ -75,23 +73,22 @@ CREATE TABLE IF NOT EXISTS `admin_users` (
 -- Utilisée pour: Affichage des services, filtres de rendez-vous
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS `services` (
-  `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT 'Identifiant unique service',
-  `name` VARCHAR(191) NOT NULL UNIQUE COMMENT 'Nom du service médical',
-  `description` TEXT NULL COMMENT 'Description détaillée du service',
-  `specialite` VARCHAR(100) NULL COMMENT 'Spécialité médicale',
-  `icon` VARCHAR(100) NULL COMMENT 'Nom de l\'icône (FontAwesome)',
-  `is_active` TINYINT DEFAULT 1 COMMENT '1=disponible, 0=indisponible',
-  `ordre_affichage` INT DEFAULT 0 COMMENT 'Ordre d\'affichage',
-  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Date de création',
-  `updated_at` DATETIME NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Date de modification',
+  `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(191) NOT NULL UNIQUE,
+  `description` TEXT NULL,
+  `specialite` VARCHAR(100) NULL,
+  `icon` VARCHAR(100) NULL,
+  `is_active` TINYINT DEFAULT 1,
+  `ordre_affichage` INT DEFAULT 0,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
   
-  -- INDEX pour optimiser les recherches
   KEY `idx_is_active` (`is_active`),
   KEY `idx_created_at` (`created_at`),
   KEY `idx_ordre` (`ordre_affichage`),
   
   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-) COMMENT='Table des services médicaux';
+);
 
 -- =====================================================================
 -- TABLE 4: appointments
@@ -99,26 +96,24 @@ CREATE TABLE IF NOT EXISTS `services` (
 -- Utilisée pour: Gestion des rendez-vous, agenda, confirmations
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS `appointments` (
-  `id_appointment` INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Identifiant unique rendez-vous',
-  `idlogin` INT NULL COMMENT 'Référence au patient (NULL si non enregistré)',
-  `name_surName` VARCHAR(100) NOT NULL COMMENT 'Nom et prénom du patient',
-  `email` VARCHAR(100) NOT NULL COMMENT 'Email du patient',
-  `telephone` VARCHAR(20) NOT NULL COMMENT 'Téléphone du patient',
-  `date_appointment` DATETIME NOT NULL COMMENT 'Date et heure du rendez-vous',
-  `raison` TEXT NULL COMMENT 'Motif de consultation',
-  `service` VARCHAR(191) NULL COMMENT 'Service médical demandé',
-  `status` ENUM('pending', 'confirmed', 'cancelled', 'completed') DEFAULT 'pending' COMMENT 'État du rendez-vous',
-  `confirmation_token` VARCHAR(64) NULL COMMENT 'Token de confirmation email',
-  `confirmed_at` DATETIME NULL COMMENT 'Date de confirmation',
-  `cancelled_at` DATETIME NULL COMMENT 'Date d\'annulation',
-  `date_creation` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Date de création du rendez-vous',
-  `date_modification` DATETIME NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Date de dernière modification',
+  `id_appointment` INT AUTO_INCREMENT PRIMARY KEY,
+  `idlogin` INT NULL,
+  `name_surName` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `telephone` VARCHAR(20) NOT NULL,
+  `date_appointment` DATETIME NOT NULL,
+  `raison` TEXT NULL,
+  `service` VARCHAR(191) NULL,
+  `status` ENUM('pending', 'confirmed', 'cancelled', 'completed') DEFAULT 'pending',
+  `confirmation_token` VARCHAR(64) NULL,
+  `confirmed_at` DATETIME NULL,
+  `cancelled_at` DATETIME NULL,
+  `date_creation` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `date_modification` DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
   
-  -- FOREIGN KEY (optionnel mais recommandé)
   CONSTRAINT `fk_appointments_login` FOREIGN KEY (`idlogin`) 
     REFERENCES `login` (`idlogin`) ON DELETE SET NULL ON UPDATE CASCADE,
   
-  -- INDEX pour optimiser les recherches
   KEY `idx_email` (`email`),
   KEY `idx_status` (`status`),
   KEY `idx_date_appointment` (`date_appointment`),
@@ -126,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `appointments` (
   KEY `idx_date_creation` (`date_creation`),
   
   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-) COMMENT='Table des rendez-vous médicaux';
+);
 
 -- =====================================================================
 -- TABLE 5: email_verifications
@@ -134,24 +129,23 @@ CREATE TABLE IF NOT EXISTS `appointments` (
 -- Utilisée pour: Confirmation d'email, sécurité, réinitialisation mot de passe
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS `email_verifications` (
-  `id_verification` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT 'Identifiant unique',
-  `email` VARCHAR(100) NOT NULL COMMENT 'Email à vérifier',
-  `token` VARCHAR(64) NOT NULL UNIQUE COMMENT 'Token sécurisé unique',
-  `entity_type` ENUM('login', 'admin', 'contact') DEFAULT 'login' COMMENT 'Type d\'entité associée',
-  `entity_id` INT NULL COMMENT 'ID de l\'entité associée',
-  `verified` BOOLEAN DEFAULT FALSE COMMENT 'TRUE=vérifié, FALSE=non vérifié',
-  `verified_at` DATETIME NULL COMMENT 'Date de vérification',
-  `expires_at` DATETIME NOT NULL COMMENT 'Date d\'expiration du token',
-  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Date de création du token',
+  `id_verification` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `email` VARCHAR(100) NOT NULL,
+  `token` VARCHAR(64) NOT NULL UNIQUE,
+  `entity_type` ENUM('login', 'admin', 'contact') DEFAULT 'login',
+  `entity_id` INT NULL,
+  `verified` TINYINT DEFAULT 0,
+  `verified_at` DATETIME NULL,
+  `expires_at` DATETIME NOT NULL,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   
-  -- INDEX pour optimiser les recherches
   KEY `idx_token` (`token`),
   KEY `idx_verified` (`verified`),
   KEY `idx_expires_at` (`expires_at`),
   KEY `idx_email` (`email`),
   
   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-) COMMENT='Table de vérification d\'email';
+);
 
 -- =====================================================================
 -- TABLE 6: audit_logs
@@ -159,22 +153,21 @@ CREATE TABLE IF NOT EXISTS `email_verifications` (
 -- Utilisée pour: Traçabilité, sécurité, conformité
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS `audit_logs` (
-  `id_log` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT 'Identifiant unique',
-  `user_id` INT NULL COMMENT 'ID de l\'utilisateur (NULL si anonyme)',
-  `user_email` VARCHAR(100) NULL COMMENT 'Email de l\'utilisateur',
-  `action` VARCHAR(100) NOT NULL COMMENT 'Action effectuée (login, logout, create, update, delete)',
-  `entity_type` VARCHAR(100) NULL COMMENT 'Type d\'entité modifiée (appointment, user, etc)',
-  `entity_id` INT NULL COMMENT 'ID de l\'entité modifiée',
-  `old_values` JSON NULL COMMENT 'Anciennes valeurs (JSON)',
-  `new_values` JSON NULL COMMENT 'Nouvelles valeurs (JSON)',
-  `details` JSON NULL COMMENT 'Détails supplémentaires',
-  `ip_address` VARCHAR(45) NULL COMMENT 'Adresse IP de l\'utilisateur',
-  `user_agent` VARCHAR(255) NULL COMMENT 'User agent navigateur',
-  `status` ENUM('success', 'failure') DEFAULT 'success' COMMENT 'Succès ou échec',
-  `error_message` TEXT NULL COMMENT 'Message d\'erreur si failure',
-  `timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Date et heure',
+  `id_log` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `user_id` INT NULL,
+  `user_email` VARCHAR(100) NULL,
+  `action` VARCHAR(100) NOT NULL,
+  `entity_type` VARCHAR(100) NULL,
+  `entity_id` INT NULL,
+  `old_values` JSON NULL,
+  `new_values` JSON NULL,
+  `details` JSON NULL,
+  `ip_address` VARCHAR(45) NULL,
+  `user_agent` VARCHAR(255) NULL,
+  `status` ENUM('success', 'failure') DEFAULT 'success',
+  `error_message` TEXT NULL,
+  `timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP,
   
-  -- INDEX pour optimiser les recherches
   KEY `idx_user_id` (`user_id`),
   KEY `idx_action` (`action`),
   KEY `idx_timestamp` (`timestamp`),
@@ -182,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `audit_logs` (
   KEY `idx_entity_type` (`entity_type`),
   
   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-) COMMENT='Journal d\'audit et de sécurité';
+);
 
 -- =====================================================================
 -- TABLE 7: visitors
@@ -190,28 +183,26 @@ CREATE TABLE IF NOT EXISTS `audit_logs` (
 -- Utilisée pour: Suivi des visites, analytics, statistiques
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS `visitors` (
-  `id_visitor` INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Identifiant unique',
-  `idlogin` INT NULL COMMENT 'Référence au patient (NULL si anonyme)',
-  `name_surName` VARCHAR(100) NOT NULL COMMENT 'Nom du visiteur',
-  `email` VARCHAR(100) NOT NULL COMMENT 'Email du visiteur',
-  `telephone` VARCHAR(20) NULL COMMENT 'Téléphone du visiteur',
-  `visitor_type` ENUM('new_account', 'appointment_request', 'contact', 'consultation') DEFAULT 'new_account' COMMENT 'Type de visite',
-  `source_page` VARCHAR(255) NULL COMMENT 'Page source de la visite',
-  `ip_address` VARCHAR(45) NULL COMMENT 'Adresse IP du visiteur',
-  `user_agent` VARCHAR(255) NULL COMMENT 'User agent du navigateur',
-  `date_visit` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Date et heure de la visite',
+  `id_visitor` INT AUTO_INCREMENT PRIMARY KEY,
+  `idlogin` INT NULL,
+  `name_surName` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `telephone` VARCHAR(20) NULL,
+  `visitor_type` ENUM('new_account', 'appointment_request', 'contact', 'consultation') DEFAULT 'new_account',
+  `source_page` VARCHAR(255) NULL,
+  `ip_address` VARCHAR(45) NULL,
+  `user_agent` VARCHAR(255) NULL,
+  `date_visit` DATETIME DEFAULT CURRENT_TIMESTAMP,
   
-  -- FOREIGN KEY (optionnel)
   CONSTRAINT `fk_visitors_login` FOREIGN KEY (`idlogin`) 
     REFERENCES `login` (`idlogin`) ON DELETE SET NULL ON UPDATE CASCADE,
   
-  -- INDEX pour optimiser les recherches
   KEY `idx_email` (`email`),
   KEY `idx_visitor_type` (`visitor_type`),
   KEY `idx_date_visit` (`date_visit`),
   
   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-) COMMENT='Table d\'analytique des visiteurs';
+);
 
 -- =====================================================================
 -- TABLE 8: contacts
@@ -219,30 +210,28 @@ CREATE TABLE IF NOT EXISTS `visitors` (
 -- Utilisée pour: Gestion des messages, support client
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS `contacts` (
-  `id_contact` INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Identifiant unique',
-  `nom` VARCHAR(100) NOT NULL COMMENT 'Nom du contact',
-  `email` VARCHAR(100) NOT NULL COMMENT 'Email du contact',
-  `telephone` VARCHAR(20) NOT NULL COMMENT 'Téléphone du contact',
-  `sujet` VARCHAR(255) NOT NULL COMMENT 'Sujet du message',
-  `message` TEXT NOT NULL COMMENT 'Corps du message',
-  `statut` ENUM('nouveau', 'en_lecture', 'repondu', 'archive') DEFAULT 'nouveau' COMMENT 'État du message',
-  `reponse` TEXT NULL COMMENT 'Réponse du support',
-  `date_creation` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Date de création',
-  `date_lecture` DATETIME NULL COMMENT 'Date de lecture',
-  `date_reponse` DATETIME NULL COMMENT 'Date de réponse',
-  `admin_id` INT NULL COMMENT 'Admin qui a répondu',
+  `id_contact` INT AUTO_INCREMENT PRIMARY KEY,
+  `nom` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `telephone` VARCHAR(20) NOT NULL,
+  `sujet` VARCHAR(255) NOT NULL,
+  `message` TEXT NOT NULL,
+  `statut` ENUM('nouveau', 'en_lecture', 'repondu', 'archive') DEFAULT 'nouveau',
+  `reponse` TEXT NULL,
+  `date_creation` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `date_lecture` DATETIME NULL,
+  `date_reponse` DATETIME NULL,
+  `admin_id` INT NULL,
   
-  -- FOREIGN KEY (optionnel)
   CONSTRAINT `fk_contacts_admin` FOREIGN KEY (`admin_id`) 
     REFERENCES `admin_users` (`id_admin`) ON DELETE SET NULL ON UPDATE CASCADE,
   
-  -- INDEX pour optimiser les recherches
   KEY `idx_email` (`email`),
   KEY `idx_statut` (`statut`),
   KEY `idx_date_creation` (`date_creation`),
   
   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-) COMMENT='Table de gestion des messages de contact';
+);
 
 -- =====================================================================
 -- TABLE 9: password_resets
@@ -250,21 +239,20 @@ CREATE TABLE IF NOT EXISTS `contacts` (
 -- Utilisée pour: Récupération de mot de passe oubliée
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS `password_resets` (
-  `id_reset` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT 'Identifiant unique',
-  `email` VARCHAR(100) NOT NULL COMMENT 'Email de l\'utilisateur',
-  `token` VARCHAR(64) NOT NULL UNIQUE COMMENT 'Token de réinitialisation',
-  `user_type` ENUM('login', 'admin') DEFAULT 'login' COMMENT 'Type d\'utilisateur',
-  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Date de création du token',
-  `expires_at` DATETIME NOT NULL COMMENT 'Date d\'expiration du token',
-  `used_at` DATETIME NULL COMMENT 'Date d\'utilisation',
+  `id_reset` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `email` VARCHAR(100) NOT NULL,
+  `token` VARCHAR(64) NOT NULL UNIQUE,
+  `user_type` ENUM('login', 'admin') DEFAULT 'login',
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `expires_at` DATETIME NOT NULL,
+  `used_at` DATETIME NULL,
   
-  -- INDEX pour optimiser les recherches
   KEY `idx_token` (`token`),
   KEY `idx_email` (`email`),
   KEY `idx_expires_at` (`expires_at`),
   
   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-) COMMENT='Table de réinitialisation de mot de passe';
+);
 
 -- =====================================================================
 -- ÉTAPE 2: INSÉRER LES SERVICES MÉDICAUX PAR DÉFAUT (15 services)
@@ -353,53 +341,6 @@ VALUES
 -- =====================================================================
 -- ÉTAPE 4: VÉRIFICATIONS FINALES
 -- =====================================================================
-
--- Afficher les tables créées
-SELECT 'Tables créées:' AS Info;
-SHOW TABLES;
-
--- Afficher le nombre d'enregistrements par table
-SELECT 'Statistiques des tables:' AS Info;
-SELECT 
-  'login' AS Table_Name, COUNT(*) AS Total_Records FROM login
-UNION ALL
-SELECT 'admin_users', COUNT(*) FROM admin_users
-UNION ALL
-SELECT 'services', COUNT(*) FROM services
-UNION ALL
-SELECT 'appointments', COUNT(*) FROM appointments
-UNION ALL
-SELECT 'email_verifications', COUNT(*) FROM email_verifications
-UNION ALL
-SELECT 'audit_logs', COUNT(*) FROM audit_logs
-UNION ALL
-SELECT 'visitors', COUNT(*) FROM visitors
-UNION ALL
-SELECT 'contacts', COUNT(*) FROM contacts
-UNION ALL
-SELECT 'password_resets', COUNT(*) FROM password_resets;
-
--- Vérifier l'admin par défaut
-SELECT 'Admin par défaut créé:' AS Info;
-SELECT 
-  id_admin AS ID, 
-  email AS Email, 
-  nom AS Nom, 
-  role AS Role, 
-  actif AS Actif,
-  date_creation AS Date_Creation
-FROM admin_users 
-WHERE email = 'administrationeecc@dashboard.com';
-
--- Vérifier les services
-SELECT 'Services médicaux créés:' AS Info;
-SELECT 
-  id AS ID, 
-  name AS Nom_Service, 
-  specialite AS Spécialité, 
-  is_active AS Actif
-FROM services 
-ORDER BY ordre_affichage ASC;
 
 -- =====================================================================
 -- RÉSUMÉ DU DÉPLOIEMENT
