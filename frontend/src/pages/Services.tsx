@@ -1,0 +1,119 @@
+import { Heart, Stethoscope, Baby, Activity, Syringe, Brain, Dumbbell, Utensils, Zap, AlertTriangle, FlaskConical } from "lucide-react";
+import { useServices } from "../hooks/useServices";
+import { LoadingSpinner } from "../components/ui/LoadingSpinner";
+
+const iconMap: Record<string, React.FC<{ className?: string }>> = {
+  "Consultation Générale":  Stethoscope,
+  "Pédiatrie":              Baby,
+  "Gynécologie":            Heart,
+  "Chirurgie":              Activity,
+  "Médecine Interne":       Heart,
+  "Neurologie":             Brain,
+  "Réanimation":            AlertTriangle,
+  "Kinésithérapie":         Dumbbell,
+  "Nutrition":              Utensils,
+  "Échographie":            Zap,
+  "Laboratoire":            FlaskConical,
+  "Urgences":               AlertTriangle,
+  "Vaccination":            Syringe,
+};
+
+export default function Services() {
+  const { data: services, isLoading } = useServices(true);
+
+  return (
+    <div>
+      {/* Hero */}
+      <div
+        className="relative h-64 flex items-center justify-center bg-cover bg-center bg-fixed"
+        style={{ backgroundImage: "url('/ASSETS/IMAGES/sevices.jpg')" }}
+      >
+        <div className="absolute inset-0 bg-gray-900/60" />
+        <div className="relative text-center text-white px-4">
+          <h1 className="text-4xl font-extrabold">Services Médicaux</h1>
+          <p className="mt-2 text-white/80 max-w-lg mx-auto">
+            Des soins complets et spécialisés pour répondre à tous vos besoins de santé
+          </p>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-7xl px-4 py-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900">Nos Spécialités</h2>
+          <p className="text-gray-500 mt-3 max-w-2xl mx-auto">
+            Le CMPB met à votre disposition une gamme complète de services médicaux, assurés par des professionnels de santé qualifiés et expérimentés.
+          </p>
+        </div>
+
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {services?.map((service) => {
+              const Icon = iconMap[service.name] ?? Heart;
+              return (
+                <div
+                  key={service.id}
+                  className="group bg-white rounded-2xl border shadow-card hover:shadow-card-hover hover:border-primary-200 p-6 transition-all"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 h-12 w-12 flex items-center justify-center rounded-xl bg-primary-50 group-hover:bg-primary-500 transition-colors">
+                      <Icon className="h-6 w-6 text-primary-500 group-hover:text-white transition-colors" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 mb-1">{service.name}</h3>
+                      {service.description && (
+                        <p className="text-sm text-gray-500 leading-relaxed">{service.description}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Equipment gallery */}
+        <div className="mt-16">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Nos Équipements</h2>
+          <p className="text-gray-500 text-center mb-8">Un plateau technique moderne pour des soins de qualité</p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            {[
+              { src: "/ASSETS/listte_appariels/Microscope.jpg",                    label: "Microscope"                  },
+              { src: "/ASSETS/listte_appariels/Dialyseur.jpg",                     label: "Dialyseur"                   },
+              { src: "/ASSETS/listte_appariels/Contracteur oxygene.jpg",           label: "Concentrateur d'oxygène"     },
+              { src: "/ASSETS/listte_appariels/Appariels electrostimulation.jpg",  label: "Électrostimulation"          },
+              { src: "/ASSETS/listte_appariels/Appariel endodontique.jpg",         label: "Appareil endodontique"       },
+            ].map(({ src, label }) => (
+              <div key={label} className="group rounded-xl overflow-hidden shadow-card border bg-white">
+                <div className="aspect-square overflow-hidden">
+                  <img
+                    src={src}
+                    alt={label}
+                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <p className="text-xs font-medium text-gray-600 text-center py-2 px-1">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Emergency banner */}
+        <div className="mt-16 rounded-2xl bg-secondary-500 p-8 text-white text-center">
+          <AlertTriangle className="h-10 w-10 mx-auto mb-3 opacity-80" />
+          <h3 className="text-2xl font-bold mb-2">Urgences Médicales</h3>
+          <p className="text-red-100 mb-5">
+            Notre unité d'urgences est disponible 24h/24, 7j/7 pour tous cas critiques.
+          </p>
+          <a
+            href="tel:+237699573569"
+            className="inline-flex items-center gap-2 bg-white text-red-600 font-bold px-6 py-3 rounded-lg hover:bg-red-50 transition-colors"
+          >
+            Appeler le +237 699 573 569
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
