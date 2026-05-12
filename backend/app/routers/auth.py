@@ -1,5 +1,6 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException, Request, status
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from ..database import get_db
@@ -77,7 +78,7 @@ def admin_login(payload: AdminLogin, request: Request, db: Session = Depends(get
     admin = (
         db.query(AdminUser)
         .filter(
-            (AdminUser.email == payload.email) | (AdminUser.nom == payload.email),
+            or_(AdminUser.email == payload.email, AdminUser.nom == payload.email),
             AdminUser.actif == 1,
         )
         .first()
@@ -95,7 +96,7 @@ def admin_login(payload: AdminLogin, request: Request, db: Session = Depends(get
             detail="Email ou mot de passe incorrect",
         )
     # Update last login
-    admin.derniere_connexion = datetime.now()
+    admin.derniere_connexion = datetime.now(timezone.utc)
     db.commit()
 
     token = create_access_token(
