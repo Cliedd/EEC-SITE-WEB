@@ -91,3 +91,14 @@ app.include_router(admin.router, prefix="/api")
 @app.get("/api/health")
 def health():
     return {"status": "ok", "service": "EEC Centre Médical API"}
+
+
+@app.get("/api/debug")
+def debug():
+    """Endpoint de diagnostic — vérifie la config sans exposer les secrets."""
+    return {
+        "database_url_set": bool(settings.DATABASE_URL),
+        "secret_key_set": settings.SECRET_KEY != "fallback-secret-change-in-production",
+        "environment": settings.ENVIRONMENT,
+        "frontend_url": settings.FRONTEND_URL,
+    }

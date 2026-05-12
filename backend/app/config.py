@@ -3,8 +3,9 @@ from functools import lru_cache
 
 
 class Settings(BaseSettings):
-    DATABASE_URL: str
-    SECRET_KEY: str
+    # Valeurs par défaut vides — évite le crash au démarrage si variables manquantes
+    DATABASE_URL: str = ""
+    SECRET_KEY: str = "fallback-secret-change-in-production"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
@@ -14,6 +15,7 @@ class Settings(BaseSettings):
     SMTP_PASS: str = ""
 
     FRONTEND_URL: str = "http://localhost:5173"
+    ENVIRONMENT: str = "development"
 
     class Config:
         env_file = ".env"
