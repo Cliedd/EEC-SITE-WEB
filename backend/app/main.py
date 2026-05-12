@@ -89,28 +89,52 @@ app.include_router(admin.router, prefix="/api")
 
 
 @app.get("/api/health")
-@app.get("/health")
 def health():
     return {"status": "ok", "service": "EEC Centre Médical API"}
 
 
-@app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH"])
-async def catch_all_debug(path: str, request: Request):
-    """Route debug temporaire — révèle le chemin exact reçu par FastAPI."""
-    return {
-        "_debug": True,
-        "url_path": str(request.url.path),
-        "path_param": path,
-        "method": request.method,
-    }
-
-
 @app.get("/api/debug")
 def debug():
-    """Endpoint de diagnostic — vérifie la config sans exposer les secrets."""
     return {
         "database_url_set": bool(settings.DATABASE_URL),
         "secret_key_set": settings.SECRET_KEY != "fallback-secret-change-in-production",
         "environment": settings.ENVIRONMENT,
         "frontend_url": settings.FRONTEND_URL,
     }
+
+
+@app.post("/api/setup/reset-admin")
+def reset_admin(db=None):
+    """Endpoint temporaire — réinitialise le compte admin. À supprimer après usage."""
+    from .database import get_db
+    from sqlalchemy import text
+    import bcrypt
+
+    db_gen = get_db()
+    db = next(db_gen)
+    try:
+        # Nouveau hash pour Admin@2026
+        pwd = bcrypt.hashpw(b"Admin@2026", bcrypt.gensalt()).decode()
+        db.execute(text("""
+            UPDATE admin
+            SET email='admin@eec-cmpb.cm',
+                mot_de_passe=:pwd,
+                nom='Administrateur'
+            WHERE id=(SELECT id FROM (SELECT id FROM admin ORDER BY id LIMIT 1) t)
+        """), {"pwd": pwd})
+        db.commit()
+        # Vérifie
+        row = db.execute(text("SELECT id, nom, email, role FROM admin LIMIT 1")).fetchone()
+        return {
+            "reset": True,
+            "admin": {"id": row[0], "nom": row[1], "email": row[2], "role": row[3]},
+            "password": "Admin@2026",
+        }
+    except Exception as e:
+        import traceback
+        return {"error": str(e), "trace": traceback.format_exc()}
+    finally:
+        try:
+            db_gen.close()
+        except Exception:
+            pass

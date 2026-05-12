@@ -1,17 +1,10 @@
-"""
-Test minimal SANS import backend — pour isoler le problème Vercel routing.
-Si cet endpoint répond correctement, le problème est dans l'import backend.
-"""
-from fastapi import FastAPI, Request
+import sys
+import os
 
-app = FastAPI()
+# Add backend/ to Python path
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "backend"))
 
+import pymysql
+pymysql.install_as_MySQLdb()
 
-@app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"])
-async def catch_all(path: str, request: Request):
-    return {
-        "vercel_routing_ok": True,
-        "url_path": str(request.url.path),
-        "path_param": path,
-        "method": request.method,
-    }
+from app.main import app  # noqa: F401 — Vercel ASGI entry point
