@@ -149,6 +149,43 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Équipe & Dimension spirituelle */}
+      <section className="mx-auto max-w-7xl px-4 py-16">
+        <div className="text-center mb-10">
+          <p className="text-sm font-semibold uppercase tracking-wider text-primary-500 mb-2">Notre équipe</p>
+          <h2 className="text-3xl font-bold text-gray-900">Une médecine au service de l'homme</h2>
+          <p className="text-gray-500 mt-3 max-w-2xl mx-auto">
+            Le CMPB allie excellence médicale et engagement chrétien pour offrir des soins complets — du corps et de l'âme.
+          </p>
+        </div>
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div className="group relative overflow-hidden rounded-2xl shadow-card">
+            <img
+              src="/ASSETS/IMAGES/equipe-medicale.jpeg"
+              alt="Équipe médicale CMPB"
+              className="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
+              <h3 className="font-bold text-lg">Équipe Médicale</h3>
+              <p className="text-sm text-white/80">Des professionnels de santé qualifiés à votre service</p>
+            </div>
+          </div>
+          <div className="group relative overflow-hidden rounded-2xl shadow-card">
+            <img
+              src="/ASSETS/IMAGES/pasteure.jpeg"
+              alt="Dimension spirituelle CMPB"
+              className="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
+              <h3 className="font-bold text-lg">Accompagnement Spirituel</h3>
+              <p className="text-sm text-white/80">Une œuvre de témoignage de l'Église Évangélique du Cameroun</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Services preview */}
       <section className="mx-auto max-w-7xl px-4 py-16">
         <div className="flex items-center justify-between mb-10">
