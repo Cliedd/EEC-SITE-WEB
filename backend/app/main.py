@@ -103,38 +103,76 @@ def debug():
     }
 
 
-@app.post("/api/setup/reset-admin")
-def reset_admin(db=None):
-    """Endpoint temporaire — réinitialise le compte admin. À supprimer après usage."""
-    from .database import get_db
-    from sqlalchemy import text
+@app.post("/api/setup/init")
+def setup_init():
+    """Endpoint temporaire — crée les tables et insère l'admin. Supprimer après usage."""
     import bcrypt
+    from .database import _get_engine, Base
+    from .models import admin, user, appointment, contact, service, visitor, audit_log, email_verification  # noqa
 
-    db_gen = get_db()
-    db = next(db_gen)
+    result = {}
     try:
-        # Nouveau hash pour Admin@2026
-        pwd = bcrypt.hashpw(b"Admin@2026", bcrypt.gensalt()).decode()
-        db.execute(text("""
-            UPDATE admin
-            SET email='admin@eec-cmpb.cm',
-                mot_de_passe=:pwd,
-                nom='Administrateur'
-            WHERE id=(SELECT id FROM (SELECT id FROM admin ORDER BY id LIMIT 1) t)
-        """), {"pwd": pwd})
-        db.commit()
-        # Vérifie
-        row = db.execute(text("SELECT id, nom, email, role FROM admin LIMIT 1")).fetchone()
-        return {
-            "reset": True,
-            "admin": {"id": row[0], "nom": row[1], "email": row[2], "role": row[3]},
-            "password": "Admin@2026",
-        }
+        engine = _get_engine()
+        Base.metadata.create_all(engine)
+        result["tables_created"] = True
+    except Exception as e:
+        result["tables_error"] = str(e)
+        return result
+
+    from sqlalchemy.orm import sessionmaker
+    from .models.admin import AdminUser
+    from .models.service import Service
+
+    Session = sessionmaker(bind=_get_engine())
+    db = Session()
+    try:
+        # Créer admin si inexistant
+        existing = db.query(AdminUser).filter(AdminUser.email == "admin@eec-cmpb.cm").first()
+        if not existing:
+            pwd = bcrypt.hashpw(b"Admin@2026", bcrypt.gensalt()).decode()
+            admin_user = AdminUser(
+                email="admin@eec-cmpb.cm",
+                mot_de_passe=pwd,
+                nom="Administrateur",
+                role="super_admin",
+                actif=1,
+            )
+            db.add(admin_user)
+            db.commit()
+            result["admin_created"] = True
+        else:
+            # Réinitialiser le mot de passe
+            pwd = bcrypt.hashpw(b"Admin@2026", bcrypt.gensalt()).decode()
+            existing.mot_de_passe = pwd
+            existing.email = "admin@eec-cmpb.cm"
+            existing.nom = "Administrateur"
+            existing.actif = 1
+            db.commit()
+            result["admin_reset"] = True
+
+        # Insérer services par défaut si table vide
+        if db.query(Service).count() == 0:
+            services = [
+                "Consultation Générale", "Pédiatrie", "Gynécologie-Obstétrique",
+                "Chirurgie Générale", "Médecine Interne", "Radiologie",
+                "Laboratoire d'Analyses", "Urgences 24h/24", "Kinésithérapie",
+                "Ophtalmologie", "ORL", "Dermatologie", "Cardiologie",
+            ]
+            for i, name in enumerate(services):
+                db.add(Service(name=name, is_active=1, ordre_affichage=i))
+            db.commit()
+            result["services_created"] = len(services)
+
+        # Vérification finale
+        a = db.query(AdminUser).filter(AdminUser.email == "admin@eec-cmpb.cm").first()
+        result["admin"] = {"id": a.id_admin, "email": a.email, "nom": a.nom, "role": a.role}
+        result["credentials"] = {"email": "admin@eec-cmpb.cm", "password": "Admin@2026"}
+        result["success"] = True
     except Exception as e:
         import traceback
-        return {"error": str(e), "trace": traceback.format_exc()}
+        result["db_error"] = str(e)
+        result["trace"] = traceback.format_exc()[-2000:]
     finally:
-        try:
-            db_gen.close()
-        except Exception:
-            pass
+        db.close()
+
+    return result
