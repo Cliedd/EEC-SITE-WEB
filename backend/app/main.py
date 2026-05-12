@@ -89,8 +89,20 @@ app.include_router(admin.router, prefix="/api")
 
 
 @app.get("/api/health")
+@app.get("/health")
 def health():
     return {"status": "ok", "service": "EEC Centre Médical API"}
+
+
+@app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH"])
+async def catch_all_debug(path: str, request: Request):
+    """Route debug temporaire — révèle le chemin exact reçu par FastAPI."""
+    return {
+        "_debug": True,
+        "url_path": str(request.url.path),
+        "path_param": path,
+        "method": request.method,
+    }
 
 
 @app.get("/api/debug")
