@@ -7,6 +7,7 @@ from ..database import get_db
 from ..models.user import User
 from ..models.admin import AdminUser
 from ..schemas.auth import UserRegister, UserLogin, AdminLogin, TokenResponse, UserOut
+from ..models.audit_log import AuditLog
 from ..utils.security import hash_password, verify_password, create_access_token
 from ..utils.audit import log_action
 
@@ -83,31 +84,29 @@ def admin_login(payload: AdminLogin, request: Request, db: Session = Depends(get
         )
         .first()
     )
+    ip = request.client.host if request.client else None
+
     if not admin or not verify_password(payload.mot_de_passe, admin.mot_de_passe):
-        log_action(
-            db,
-            action="ADMIN_LOGIN",
-            status="failure",
-            user_email=payload.email,
-            ip_address=request.client.host if request.client else None,
-        )
+        log_action(db, action="ADMIN_LOGIN", status="failure",
+                   user_email=payload.email, ip_address=ip)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Email ou mot de passe incorrect",
         )
-    # Update last login
+
+    # Un seul commit groupé : mise à jour derniere_connexion + audit
     admin.derniere_connexion = datetime.now(timezone.utc)
+    db.add(AuditLog(
+        action="ADMIN_LOGIN",
+        user_id=admin.id_admin,
+        user_email=admin.email,
+        ip_address=ip,
+        status="success",
+    ))
     db.commit()
 
     token = create_access_token(
         {"sub": str(admin.id_admin), "email": admin.email, "role": "admin"}
-    )
-    log_action(
-        db,
-        action="ADMIN_LOGIN",
-        user_id=admin.id_admin,
-        user_email=admin.email,
-        ip_address=request.client.host if request.client else None,
     )
     return TokenResponse(
         access_token=token,

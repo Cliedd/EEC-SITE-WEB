@@ -69,6 +69,17 @@ async def validation_exception_handler(request: Request, exc):
     )
 
 
+# Handler 500 — retourne le message d'erreur en JSON (utile pour debug)
+@app.exception_handler(500)
+async def internal_error_handler(request: Request, exc):
+    import traceback
+    err = traceback.format_exc()
+    return JSONResponse(
+        status_code=500,
+        content={"detail": str(exc), "trace": err[-1000:] if not IS_DEV else err},
+    )
+
+
 # Routers
 app.include_router(auth.router, prefix="/api")
 app.include_router(appointments.router, prefix="/api")
