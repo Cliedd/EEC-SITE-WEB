@@ -88,51 +88,6 @@ app.include_router(services.router, prefix="/api")
 app.include_router(admin.router, prefix="/api")
 
 
-@app.post("/api/setup/init")
-def setup_init():
-    """Endpoint temporaire — recrée toutes les tables + admin depuis zéro."""
-    import bcrypt
-    from .database import _get_engine, Base
-    from .models import admin as _a, user as _u, appointment as _ap  # noqa
-    from .models import contact as _c, service as _s, visitor as _v  # noqa
-    from .models import audit_log as _al, email_verification as _ev  # noqa
-    from .models.admin import AdminUser
-    from .models.service import Service
-    from sqlalchemy.orm import sessionmaker
-
-    result = {}
-    try:
-        engine = _get_engine()
-        Base.metadata.drop_all(engine)
-        Base.metadata.create_all(engine)
-        result["tables_recreated"] = True
-    except Exception as e:
-        result["error"] = str(e)
-        return result
-
-    Session = sessionmaker(bind=_get_engine())
-    db = Session()
-    try:
-        pwd = bcrypt.hashpw(b"Admin@2026", bcrypt.gensalt()).decode()
-        db.add(AdminUser(email="admin@eec-cmpb.cm", mot_de_passe=pwd,
-                         nom="Administrateur", role="super_admin", actif=1))
-        services = ["Consultation Générale","Pédiatrie","Gynécologie-Obstétrique",
-                    "Chirurgie Générale","Médecine Interne","Radiologie",
-                    "Laboratoire d'Analyses","Urgences 24h/24","Kinésithérapie",
-                    "Ophtalmologie","ORL","Dermatologie","Cardiologie"]
-        for i, name in enumerate(services):
-            db.add(Service(name=name, is_active=1, ordre_affichage=i))
-        db.commit()
-        result["success"] = True
-        result["credentials"] = {"email": "admin@eec-cmpb.cm", "password": "Admin@2026"}
-    except Exception as e:
-        import traceback
-        result["db_error"] = str(e)
-        result["trace"] = traceback.format_exc()[-1000:]
-    finally:
-        db.close()
-    return result
-
 
 @app.get("/api/health")
 def health():
