@@ -10,7 +10,7 @@ export function Footer() {
           <div className="space-y-4">
             <div>
               <p className="text-xs font-semibold uppercase tracking-wider text-primary-400">Centre médical protestant</p>
-              <p className="text-xl font-bold text-white">de Bafoussam</p>
+              <p className="text-xl font-bold text-white"> Bafoussam</p>
             </div>
             <p className="text-sm leading-relaxed">
               Œuvre de témoignage de l'Église Évangélique du Cameroun, au service de la santé depuis 1978.
@@ -37,7 +37,7 @@ export function Footer() {
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">Nos Services</h3>
             <ul className="space-y-2 text-sm">
-              {["Consultations", "Hospitalisation", "Urgences 24h/24", "Pédiatrie", "Gynécologie", "Chirurgie"].map((s) => (
+              {["Médecine interne", "Maternité", "Pédiatrie/Neonatalogie","Chirurgie", "Urgences","Imagerie médicale", "Soins intensifs","Neurologie", "Nutrition","Kinesitherapeute","Pharmacie","Vaccination","UPEC","Administration","Aumonerie"].map((s) => (
                 <li key={s}>
                   <Link to="/services" className="hover:text-primary-400 transition-colors">
                     {s}
@@ -71,11 +71,13 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 text-primary-400 mt-0.5 flex-shrink-0" />
-                <span>Avant le stade omnisports Kouekong, Bafoussam</span>
+                <span>Situer au plateau a coté du marché C de Bafoussam</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-primary-400 flex-shrink-0" />
-                <a href="tel:+237699573569" className="hover:text-primary-400">+237 699 573 569</a>
+                <a href="tel:+237656239216" className="hover:text-primary-400">+237 656239216</a>
+                <a href="tel:+237656239216" className="hover:text-primary-400">+237 694596233</a>
+                <a href="tel:+237656239216" className="hover:text-primary-400">+237 677365858</a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-primary-400 flex-shrink-0" />

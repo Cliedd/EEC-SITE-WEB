@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Calendar, Phone, Heart, Shield, Clock, ChevronRight } from "lucide-react";
 import { HeroCarousel } from "../components/HeroCarousel";
@@ -7,7 +8,7 @@ import { LoadingSpinner } from "../components/ui/LoadingSpinner";
 
 const stats = [
   { label: "Années d'expérience", value: "46+" },
-  { label: "Services médicaux",   value: "13"  },
+  { label: "Services médicaux",   value: "15"  },
   { label: "Disponibilité",       value: "24/7"},
   { label: "Patients accompagnés",value: "∞"   },
 ];
@@ -26,24 +27,27 @@ const features = [
   {
     icon: Clock,
     title: "Disponible 24h/24",
-    desc: "Nos urgences et notre équipe restent disponibles 7 jours sur 7, 24 heures sur 24.",
+    desc: "Notre équipe est disponibles 7 jours sur 7, 24 heures sur 24.",
   },
 ];
 
 export default function Home() {
   const { data: services, isLoading } = useServices(true);
+  const [heroDescription, setHeroDescription] = useState(
+    "Soins de qualité pour tous — au cœur de Bafoussam depuis 1978"
+  );
 
   return (
     <div>
       {/* Hero Carousel */}
-      <div className="relative">
-        <HeroCarousel />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pointer-events-none">
+      <div className="relative z-0">
+        <HeroCarousel onSlideChange={(_, slide) => setHeroDescription(slide.description ?? slide.caption ?? "Soins de qualité pour tous — au cœur de Bafoussam depuis 1978")} />
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4 pointer-events-none">
           <h1 className="text-3xl sm:text-5xl font-extrabold text-white drop-shadow-lg mb-4 max-w-3xl leading-tight">
             Centre Médical Protestant<br />de Bafoussam
           </h1>
           <p className="text-white/90 text-lg max-w-xl mb-6 drop-shadow">
-            Soins de qualité pour tous — au cœur de Bafoussam depuis 1978
+            {heroDescription}
           </p>
           <div className="flex flex-wrap gap-3 justify-center pointer-events-auto">
             <Link to="/rendez-vous">
@@ -82,7 +86,7 @@ export default function Home() {
               <h2 className="text-3xl font-bold text-gray-900">Une institution de santé engagée</h2>
             </div>
             <p className="text-gray-600 leading-relaxed">
-              Le Centre Médical Protestant de Bafoussam est une œuvre de témoignage de l'Église Évangélique du Cameroun (EEC). Créé en <strong>1978</strong> par arrêté d'ouverture N°135/A/MSP du 05/05/1978, il est situé en plein cœur de la ville de Bafoussam.
+              Le Centre Médical Protestant de Bafoussam est une œuvre de témoignage de l'Église Évangélique du Cameroun (EEC). Crée en <strong>1978</strong> par arrêté d'ouverture N°135/A/MSP du 05/05/1978, il est situé en plein cœur de la ville de Bafoussam à coté du marché C.
             </p>
             <p className="text-gray-600 leading-relaxed">
               Depuis sa médicalisation en l'an 2000, le CMPB est dirigé par des médecins qualifiés et propose une gamme complète de services médicaux accessibles à tous.
@@ -102,26 +106,46 @@ export default function Home() {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <img
-              src="/ASSETS/IMAGES/imgEnter.JPG"
-              alt="Vue aérienne CMPB"
-              className="rounded-2xl object-cover h-56 w-full shadow-card"
-            />
-            <img
-              src="/ASSETS/IMAGES/entree-principale.png"
-              alt="Entrée principale CMPB"
-              className="rounded-2xl object-cover h-56 w-full shadow-card mt-8"
-            />
-            <img
-              src="/ASSETS/IMAGES/SETPR0011 (25).JPG"
-              alt="Équipements CMPB"
-              className="rounded-2xl object-cover h-40 w-full shadow-card"
-            />
-            <img
-              src="/ASSETS/IMAGES/consutation.jpg"
-              alt="Consultation médicale"
-              className="rounded-2xl object-cover h-40 w-full shadow-card mt-4"
-            />
+            <div className="space-y-3 text-center">
+              <img
+                src="/ASSETS/IMAGES/entree-principale.png"
+                alt="Vue aérienne CMPB"
+                className="rounded-2xl object-cover h-56 w-full shadow-card"
+              />
+              <p className="text-sm text-gray-600">
+                Entrée principale du Centre Médical Protestant de Bafoussam.
+              </p>
+            </div>
+            <div className="space-y-3 text-center">
+              <img
+                src="/ASSETS/IMAGES/Neonatologie.jpg"
+                alt="Entrée principale CMPB"
+                className="rounded-2xl object-cover h-56 w-full shadow-card mt-8"
+              />
+              <p className="text-sm text-gray-600">
+               néonatologie.
+              </p>
+            </div>
+            <div className="space-y-3 text-center">
+              <img
+                src="/ASSETS/IMAGES/SETPR0011 (25).JPG"
+                alt="Équipements CMPB"
+                className="rounded-2xl object-cover h-40 w-full shadow-card"
+              />
+              <p className="text-sm text-gray-600">
+                Laboratoire.
+              </p>
+            </div>
+            <div className="space-y-3 text-center">
+              <img
+                src="/ASSETS/IMAGES/SalleOperatoir.jpg"
+                alt="Consultation médicale"
+                className="rounded-2xl object-cover h-40 w-full shadow-card mt-4"
+              />
+              <p className="text-sm text-gray-600">
+                Bloc Opératoire.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -155,32 +179,58 @@ export default function Home() {
           <p className="text-sm font-semibold uppercase tracking-wider text-primary-500 mb-2">Notre équipe</p>
           <h2 className="text-3xl font-bold text-gray-900">Une médecine au service de l'homme</h2>
           <p className="text-gray-500 mt-3 max-w-2xl mx-auto">
-            Le CMPB allie excellence médicale et engagement chrétien pour offrir des soins complets — du corps et de l'âme.
+            Le Centre Médical Protestant de Bafoussam allie excellence médicale et engagement chrétien pour offrir des soins complets — du corps et de l'âme.
           </p>
         </div>
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-6 lg:grid-cols-2 max-w-4xl mx-auto">
           <div className="group relative overflow-hidden rounded-2xl shadow-card">
             <img
-              src="/ASSETS/IMAGES/equipe-medicale.jpeg"
-              alt="Équipe médicale CMPB"
-              className="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500"
+              src="/ASSETS/IMAGES/MedecinChef.jpg"
+              alt="Medecin Chef"
+              className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-              <h3 className="font-bold text-lg">Équipe Médicale</h3>
-              <p className="text-sm text-white/80">Des professionnels de santé qualifiés à votre service</p>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-5 text-center text-white">
+              <h3 className="font-bold text-lg">Médecin Chef</h3>
+             
             </div>
           </div>
           <div className="group relative overflow-hidden rounded-2xl shadow-card">
             <img
+              src="/ASSETS/IMAGES/responsable-financier.jpg"
+              alt="Dimension spirituelle CMPB"
+              className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-5 text-center text-white">
+              <h3 className="font-bold text-lg">Responsable Financier</h3>
+             
+            </div>
+          </div>
+
+          <div className="group relative overflow-hidden rounded-2xl shadow-card">
+            <img
+              src="/ASSETS/IMAGES/SuveillanteGenerale.jpg" 
+              alt="Dimension spirituelle CMPB"
+              className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-5 text-center text-white">
+              <h3 className="font-bold text-lg">Infimière Cheffe</h3>
+              
+            </div>
+          </div>
+
+          <div className="group relative overflow-hidden rounded-2xl shadow-card">
+            <img
               src="/ASSETS/IMAGES/pasteure.jpeg"
               alt="Dimension spirituelle CMPB"
-              className="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-              <h3 className="font-bold text-lg">Accompagnement Spirituel</h3>
-              <p className="text-sm text-white/80">Une œuvre de témoignage de l'Église Évangélique du Cameroun</p>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-5 text-center text-white">
+              <h3 className="font-bold text-lg">Aumonière</h3>
+              
             </div>
           </div>
         </div>
@@ -221,7 +271,7 @@ export default function Home() {
         <div className="mx-auto max-w-2xl px-4 space-y-6">
           <h2 className="text-3xl font-bold">Besoin d'une consultation ?</h2>
           <p className="text-primary-100">
-            Notre équipe médicale est disponible 24h/24. Prenez rendez-vous en ligne ou appelez-nous directement.
+            Notre équipe médicale est disponible 24h/24. Prenez rendez-vous en ligne ou appelez nous directement.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link to="/rendez-vous">
@@ -233,7 +283,7 @@ export default function Home() {
             <a href="tel:+237699573569">
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-primary-400">
                 <Phone className="h-5 w-5" />
-                +237 699 573 569
+                +237 93 03 67 12
               </Button>
             </a>
           </div>

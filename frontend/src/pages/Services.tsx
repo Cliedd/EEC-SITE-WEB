@@ -37,12 +37,40 @@ export default function Services() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900">Nos Spécialités</h2>
-          <p className="text-gray-500 mt-3 max-w-2xl mx-auto">
-            Le CMPB met à votre disposition une gamme complète de services médicaux, assurés par des professionnels de santé qualifiés et expérimentés.
-          </p>
+      <div className="mx-auto max-w-6xl px-4 py-16">
+        <div className="rounded-2xl bg-gray-100 p-6 mb-12">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Nos Spécialités</h2>
+            <p className="text-gray-600 mt-2 max-w-2xl mx-auto text-sm sm:text-base">
+              Le Centre Médical Protestant de Bafoussam met à votre disposition une gamme complète de services médicaux.
+            </p>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              "Médecine interne",
+              "Maternité",
+              "Pédiatrie/Neonatalogie",
+              "Chirurgie",
+              "Urgences",
+              "Imagerie médicale",
+              "Soins intensifs",
+              "Neurologie",
+              "Nutrition",
+              "Kinesitherapeute",
+              "Pharmacie",
+              "Vaccination",
+              "UPEC",
+              "Administration",
+              "Aumonerie",
+            ].map((service) => (
+              <div key={service} className="rounded-2xl bg-white px-4 py-5 text-center shadow-sm">
+                <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                  <span className="text-base font-bold">✓</span>
+                </div>
+                <p className="text-sm font-medium text-gray-900">{service}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
         {isLoading ? (
@@ -110,7 +138,7 @@ export default function Services() {
             href="tel:+237699573569"
             className="inline-flex items-center gap-2 bg-white text-red-600 font-bold px-6 py-3 rounded-lg hover:bg-red-50 transition-colors"
           >
-            Appeler le +237 699 573 569
+            Appeler le  +237 93 03 67 12
           </a>
         </div>
       </div>

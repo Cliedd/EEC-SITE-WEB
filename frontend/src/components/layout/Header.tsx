@@ -31,11 +31,11 @@ export function Header() {
           <div className="flex items-center gap-1">
             <Phone className="h-3.5 w-3.5" />
             <a href="tel:+237699573569" className="hover:text-primary-100">
-              +237 699 573 569
+               +237 93 03 67 12
             </a>
             <span className="mx-1 opacity-50">/</span>
             <a href="tel:+237654395887" className="hover:text-primary-100">
-              654 395 887
+              +237 656239216
             </a>
           </div>
         </div>

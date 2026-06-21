@@ -33,7 +33,7 @@ export default function PatientSpace() {
         <div className="relative text-center text-white px-4">
           <h1 className="text-4xl font-extrabold">Espace Patient</h1>
           <p className="mt-2 text-primary-200 max-w-xl mx-auto">
-            Tout ce que vous devez savoir pour préparer votre visite au CMPB
+            Tout ce que vous devez savoir pour préparer votre visite au Centre Médical Protestant de Bafoussam
           </p>
           <div className="mt-6">
             <Link to="/rendez-vous">
@@ -78,7 +78,7 @@ export default function PatientSpace() {
           <div className="rounded-2xl bg-gray-50 border p-6 space-y-3">
             <h3 className="font-bold text-gray-900 text-lg">Documents à apporter</h3>
             <ul className="text-sm text-gray-600 space-y-2">
-              {["Pièce d'identité ou carnet de naissance", "Carnet de santé (si disponible)", "Ordonnances et résultats d'examens antérieurs", "Carte d'assurance maladie (si applicable)"].map((d) => (
+              {["Pièce d'identité (si disponible)", "Carnet de santé (si disponible)", "Ordonnances et résultats d'examens antérieurs", "Carte d'assurance maladie (si applicable)"].map((d) => (
                 <li key={d} className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-primary-500 flex-shrink-0 mt-0.5" />
                   {d}
@@ -111,10 +111,10 @@ export default function PatientSpace() {
           <p className="text-gray-400">En cas d'urgence médicale, appelez-nous immédiatement</p>
           <div className="flex flex-wrap gap-3 justify-center">
             <a href="tel:+237699573569" className="inline-block bg-primary-500 hover:bg-primary-600 text-white font-bold px-6 py-3 rounded-lg transition-colors">
-              +237 699 573 569
+              +237 693 03 67 12
             </a>
             <a href="tel:+237654395887" className="inline-block bg-gray-700 hover:bg-gray-600 text-white font-bold px-6 py-3 rounded-lg transition-colors">
-              +237 654 395 887
+              +237 656 23 92 16
             </a>
           </div>
         </section>

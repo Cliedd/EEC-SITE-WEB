@@ -9,9 +9,9 @@ import type { ContactCreate } from "../types";
 
 const contactInfo = [
   { icon: Clock,  title: "Horaires",  text: "24H/24, 7J/7" },
-  { icon: MapPin, title: "Adresse",   text: "Avant le stade omnisports Kouekong, Bafoussam" },
+  { icon: MapPin, title: "Adresse",   text: "Situer au plateau a coté du marché C de Bafoussam" },
   { icon: Mail,   title: "Email",     text: "cmpbafoussam2020@gmail.com", href: "mailto:cmpbafoussam2020@gmail.com" },
-  { icon: Phone,  title: "Téléphone", text: "+237 699 573 569 / 654 395 887", href: "tel:+237699573569" },
+  { icon: Phone,  title: "Téléphone", text: "+237 693 03 67 12 / +237 656 23 92 16", href: "tel:+237 693036712" },
 ];
 
 export default function Contact() {

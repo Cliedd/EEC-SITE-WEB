@@ -1,4 +1,4 @@
-import pymysql
+\Z  import pymysql
 pymysql.install_as_MySQLdb()
 
 from sqlalchemy import create_engine
@@ -8,7 +8,7 @@ from typing import Generator
 
 class Base(DeclarativeBase):
     pass
-
+\
 
 _engine = None
 _SessionLocal = None

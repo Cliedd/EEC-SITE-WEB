@@ -1,13 +1,24 @@
 const team = [
   {
-    name: "Dr Bonny Dalle Cyrile",
-    role: "Médecin-chef (2020 – Auj.)",
-    img: "/ASSETS/IMAGES/directeur-generale.jpg",
+    name: "Dr Bonny Dalle Mouanjo Cyrille",
+    role: "Médecin-chef",
+    img: "/ASSETS/IMAGES/MedecinChef.jpg",
   },
   {
-    name: "Responsable Financier",
-    role: "Direction administrative",
+    name: "Douanla Nadège",
+    role: "Surveillante générale",
+    img: "/ASSETS/IMAGES/SuveillanteGenerale.jpg",
+  },
+  {
+    name: "Mouelle Dika Richard",
+    role: "Responsable Financier",
     img: "/ASSETS/IMAGES/responsable-financier.jpg",
+  },
+  
+  {
+    name: "Nzeket Njankouo Caroline Epouse Mfoutie",
+    role: "Aumonière",
+    img: "/ASSETS/IMAGES/pasteure.jpeg",
   },
 ];
 
@@ -20,7 +31,7 @@ export default function About() {
     { period: "2010 – 2013", name: "Dr Ndensi Jean Paul"   },
     { period: "2013 – 2014", name: "Dr Tchamou Michel"     },
     { period: "2014 – 2020", name: "Dr Chemgne Nadine"     },
-    { period: "2020 – Auj.", name: "Dr Bonny Dalle Cyrile" },
+    { period: "2020 – Auj.", name: "Dr Bonny Dalle Mouanjo Cyrille" },
   ];
 
   return (
@@ -46,7 +57,7 @@ export default function About() {
               Le Centre Médical Protestant de Bafoussam est une œuvre de témoignage de l'Église Évangélique du Cameroun (EEC). C'est un centre de formation sanitaire créé en <strong>1978</strong> par arrêté d'ouverture <em>N°135/A/MSP du 05/05/1978</em>, situé en plein cœur de la ville de Bafoussam au lieu-dit plateau après le marché C.
             </p>
             <p>
-              À son ouverture, le CMPB était appelé « Centre de Santé Médicalisé de Bafoussam » et était intégré à l'Hôpital Protestant de Mbouo-Bandjoun, d'où l'alias « Petit Mbo ».
+              À son ouverture, le CMPB était appelé « Centre de Santé Médicalisé de Bafoussam » et était intégré à l'Hôpital Protestant de Mbouo-Bandjoun, d'où l'alias « Petit Mbouo ».
             </p>
             <p>
               Dès sa création jusqu'en l'an 2000, ce centre était dirigé par des infirmiers. À partir de 2000, date de sa médicalisation, il a été confié à des médecins portant le titre de « Médecin-chef ».
@@ -119,7 +130,7 @@ export default function About() {
         {/* Mission & Vision */}
         <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {[
-            { title: "Notre Mission", text: "Offrir des soins médicaux de qualité accessibles à toute la population de Bafoussam et des régions environnantes, dans un esprit chrétien de service." },
+            { title: "Notre Mission", text: "Offrir des soins médicaux de qualité accessibles à toute la population de Bafoussam et des régions environnantes, dans la crainte de Dieu." },
             { title: "Notre Vision",  text: "Devenir un centre médical de référence dans la région de l'Ouest Cameroun, alliant excellence médicale, accessibilité financière et humanisme." },
             { title: "Nos Valeurs",  text: "Intégrité, compassion, excellence professionnelle, respect de la dignité humaine et engagement communautaire guident chacune de nos actions." },
           ].map(({ title, text }) => (
