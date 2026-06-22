@@ -1,0 +1,13 @@
+frontend/
+node_modules/
+.git/
+.idea/
+.vercel/
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+dist/
+build/
+.pytest_cache/
