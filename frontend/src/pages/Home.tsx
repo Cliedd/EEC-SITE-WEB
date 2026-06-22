@@ -2,9 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Calendar, Phone, Heart, Shield, Clock, ChevronRight } from "lucide-react";
 import { HeroCarousel } from "../components/HeroCarousel";
-import { useServices } from "../hooks/useServices";
 import { Button } from "../components/ui/Button";
-import { LoadingSpinner } from "../components/ui/LoadingSpinner";
 
 const stats = [
   { label: "Années d'expérience", value: "46+" },
@@ -50,7 +48,6 @@ const specialties = [
 ];
 
 export default function Home() {
-  const { data: services, isLoading } = useServices(true);
   const [heroDescription, setHeroDescription] = useState(
     "Soins de qualité pour tous — au cœur de Bafoussam depuis 1978"
   );
@@ -278,21 +275,6 @@ export default function Home() {
             </div>
           ))}
         </div>
-
-        {isLoading ? (
-          <LoadingSpinner />
-        ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {services?.slice(0, 8).map((service) => (
-              <div key={service.id} className="group flex items-center gap-3 rounded-xl border bg-white p-4 shadow-card hover:shadow-card-hover hover:border-primary-200 transition-all">
-                <div className="h-10 w-10 flex-shrink-0 flex items-center justify-center rounded-full bg-primary-50 text-primary-500 group-hover:bg-primary-500 group-hover:text-white transition-colors">
-                  <Heart className="h-5 w-5" />
-                </div>
-                <span className="text-sm font-medium text-gray-800">{service.name}</span>
-              </div>
-            ))}
-          </div>
-        )}
       </section>
 
       {/* CTA */}
