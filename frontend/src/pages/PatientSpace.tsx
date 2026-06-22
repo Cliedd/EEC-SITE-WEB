@@ -3,16 +3,10 @@ import { Calendar, FileText, Phone, CheckCircle } from "lucide-react";
 import { Button } from "../components/ui/Button";
 
 const gallery = [
-  { src: "/ASSETS/IMAGES/SETPR0011 (125).JPG",               alt: "Néonatologie"          },
-  { src: "/ASSETS/IMAGES/SETPR0011 (187).JPG",               alt: "Bactériologie"         },
-  { src: "/ASSETS/IMAGES/SETPR0011 (70).JPG",                alt: "Réanimation"           },
-  { src: "/ASSETS/IMAGES/SETPR0011 (27).JPG",                alt: "Équipement médical"    },
-  { src: "/ASSETS/IMAGES/IMG-service1.jpg",                  alt: "Service médical"       },
   { src: "/ASSETS/IMAGES/IMG-service2.jpg",                  alt: "Salle de soins"        },
   { src: "/ASSETS/IMAGES/IMG-service3.jpg",                  alt: "Consultation"          },
   { src: "/ASSETS/IMAGES/IMG-service4.jpg",                  alt: "Plateau technique"     },
   { src: "/ASSETS/IMAGES/IMG-20251011-WA0004(1).jpg",        alt: "Nos installations"     },
-  { src: "/ASSETS/IMAGES/IMG-20251011-WA0006(1).jpg",        alt: "Locaux CMPB"           },
 ];
 
 const steps = [

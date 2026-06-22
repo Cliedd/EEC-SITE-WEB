@@ -31,6 +31,24 @@ const features = [
   },
 ];
 
+const specialties = [
+  "Médecine interne",
+  "Maternité",
+  "Pédiatrie/Neonatalogie",
+  "Chirurgie",
+  "Urgences",
+  "Imagerie médicale",
+  "Soins intensifs",
+  "Neurologie",
+  "Nutrition",
+  "Kinesitherapeute",
+  "Pharmacie",
+  "Vaccination",
+  "UPEC",
+  "Administration",
+  "Aumonerie",
+];
+
 export default function Home() {
   const { data: services, isLoading } = useServices(true);
   const [heroDescription, setHeroDescription] = useState(
@@ -237,17 +255,28 @@ export default function Home() {
       </section>
 
       {/* Services preview */}
-      <section className="mx-auto max-w-7xl px-4 py-16">
-        <div className="flex items-center justify-between mb-10">
+      <section className="mx-auto max-w-5xl px-4 py-12 bg-gray-50">
+        <div className="flex items-center justify-between mb-8">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wider text-primary-500 mb-1">Nos spécialités</p>
             <h2 className="text-3xl font-bold text-gray-900">Services Médicaux</h2>
           </div>
           <Link to="/services">
             <Button variant="outline" size="sm">
-              Voir tous <ChevronRight className="h-4 w-4" />
+              En savoir plus<ChevronRight className="h-4 w-4" />
             </Button>
           </Link>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 mb-10">
+          {specialties.map((service) => (
+            <div key={service} className="rounded-2xl bg-white px-4 py-5 text-center shadow-sm">
+              <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                <span className="text-base font-bold">✓</span>
+              </div>
+              <p className="text-sm font-medium text-gray-900">{service}</p>
+            </div>
+          ))}
         </div>
 
         {isLoading ? (

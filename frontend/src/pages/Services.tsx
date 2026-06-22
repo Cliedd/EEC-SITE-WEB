@@ -2,21 +2,6 @@ import { Heart, Stethoscope, Baby, Activity, Syringe, Brain, Dumbbell, Utensils,
 import { useServices } from "../hooks/useServices";
 import { LoadingSpinner } from "../components/ui/LoadingSpinner";
 
-const iconMap: Record<string, React.FC<{ className?: string }>> = {
-  "Consultation Générale":  Stethoscope,
-  "Pédiatrie":              Baby,
-  "Gynécologie":            Heart,
-  "Chirurgie":              Activity,
-  "Médecine Interne":       Heart,
-  "Neurologie":             Brain,
-  "Réanimation":            AlertTriangle,
-  "Kinésithérapie":         Dumbbell,
-  "Nutrition":              Utensils,
-  "Échographie":            Zap,
-  "Laboratoire":            FlaskConical,
-  "Urgences":               AlertTriangle,
-  "Vaccination":            Syringe,
-};
 
 export default function Services() {
   const { data: services, isLoading } = useServices(true);
