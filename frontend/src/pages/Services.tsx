@@ -1,11 +1,7 @@
-import { Heart, Stethoscope, Baby, Activity, Syringe, Brain, Dumbbell, Utensils, Zap, AlertTriangle, FlaskConical } from "lucide-react";
-import { useServices } from "../hooks/useServices";
-import { LoadingSpinner } from "../components/ui/LoadingSpinner";
+import { AlertTriangle } from "lucide-react";
 
 
 export default function Services() {
-  const { data: services, isLoading } = useServices(true);
-
   return (
     <div>
       {/* Hero */}
@@ -57,34 +53,6 @@ export default function Services() {
             ))}
           </div>
         </div>
-
-        {isLoading ? (
-          <LoadingSpinner />
-        ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {services?.map((service) => {
-              const Icon = iconMap[service.name] ?? Heart;
-              return (
-                <div
-                  key={service.id}
-                  className="group bg-white rounded-2xl border shadow-card hover:shadow-card-hover hover:border-primary-200 p-6 transition-all"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 h-12 w-12 flex items-center justify-center rounded-xl bg-primary-50 group-hover:bg-primary-500 transition-colors">
-                      <Icon className="h-6 w-6 text-primary-500 group-hover:text-white transition-colors" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 mb-1">{service.name}</h3>
-                      {service.description && (
-                        <p className="text-sm text-gray-500 leading-relaxed">{service.description}</p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
 
         {/* Equipment gallery */}
         <div className="mt-16">
