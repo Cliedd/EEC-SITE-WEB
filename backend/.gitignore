@@ -8,3 +8,6 @@ venv/
 dist/
 build/
 .pytest_cache/
+
+# Dumps SQL — peuvent contenir des données personnelles, ne JAMAIS committer
+db/*.sql
