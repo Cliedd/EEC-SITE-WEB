@@ -1,0 +1,46 @@
+@startuml 05-sequence-admin
+!include style.puml
+title Diagramme de séquence — Connexion administrateur et tableau de bord
+
+actor "Administrateur" as A
+participant "Frontend\nReact (Vercel)" as F
+participant "API FastAPI\n(Railway)" as API
+database "MySQL\n(Railway)" as DB
+
+autonumber
+
+A -> F : Saisit e-mail + mot de passe
+activate F
+F -> API : POST /api/auth/admin/login
+activate API
+API -> DB : SELECT admin_users WHERE email = ? AND actif = 1
+activate DB
+DB --> API : compte administrateur
+deactivate DB
+API -> API : verify_password (bcrypt)
+
+alt Identifiants valides
+  API -> DB : INSERT audit_log (ADMIN_LOGIN, success)
+  API -> API : Génération du jeton JWT (HS256)
+  API --> F : 200 OK { access_token, user_name }
+  F -> F : Stockage du jeton (localStorage)
+  F --> A : Redirection vers le tableau de bord
+else Identifiants invalides
+  API -> DB : INSERT audit_log (ADMIN_LOGIN, failure)
+  API --> F : 401 Unauthorized
+  F --> A : Message d'erreur
+end
+
+A -> F : Ouvre le tableau de bord
+F -> API : GET /api/admin/stats\nAuthorization: Bearer <JWT>
+activate API
+API -> API : Vérification du JWT (get_current_admin)
+API -> DB : Agrégation (rdv, messages, visiteurs)
+activate DB
+DB --> API : statistiques
+deactivate DB
+API --> F : 200 OK { statistiques }
+deactivate API
+F --> A : Affichage des indicateurs
+deactivate F
+@enduml

@@ -1,0 +1,115 @@
+@startuml 03-entites-relations
+!include style.puml
+title Modèle logique de données (MLD) — Base MySQL « eecbafoussam »
+hide circle
+skinparam linetype ortho
+
+entity "login" as login {
+  * idlogin : INT <<PK>>
+  --
+  name_surName : VARCHAR(100)
+  email : VARCHAR(100) <<UQ>>
+  telephone : VARCHAR(20)
+  mot_de_passe : VARCHAR(255)
+  actif : TINYINT
+  email_verified : TINYINT
+  date_creation : DATETIME
+}
+
+entity "admin_users" as admin {
+  * id_admin : INT <<PK>>
+  --
+  email : VARCHAR(100) <<UQ>>
+  mot_de_passe : VARCHAR(255)
+  nom : VARCHAR(100)
+  role : VARCHAR(50)
+  actif : TINYINT
+  derniere_connexion : DATETIME
+}
+
+entity "appointments" as appt {
+  * id_appointment : INT <<PK>>
+  --
+  o idlogin : INT <<FK>>
+  name_surName : VARCHAR(100)
+  email : VARCHAR(100)
+  telephone : VARCHAR(20)
+  date_appointment : DATETIME
+  service : VARCHAR(191)
+  raison : TEXT
+  status : ENUM
+  confirmation_token : VARCHAR(64)
+  date_creation : DATETIME
+}
+
+entity "contacts" as contact {
+  * id_contact : INT <<PK>>
+  --
+  name_surName : VARCHAR(100)
+  email : VARCHAR(100)
+  objet : VARCHAR(255)
+  message : TEXT
+  status : ENUM
+  date_creation : DATETIME
+}
+
+entity "services" as svc {
+  * id : INT <<PK>>
+  --
+  name : VARCHAR(191) <<UQ>>
+  description : TEXT
+  specialite : VARCHAR(100)
+  icon : VARCHAR(100)
+  is_active : TINYINT
+  ordre_affichage : INT
+}
+
+entity "visitors" as visitor {
+  * id_visitor : INT <<PK>>
+  --
+  o idlogin : INT <<FK>>
+  name_surName : VARCHAR(100)
+  email : VARCHAR(100)
+  visitor_type : ENUM
+  source_page : VARCHAR(255)
+  ip_address : VARCHAR(45)
+  date_visit : DATETIME
+}
+
+entity "email_verifications" as ev {
+  * id_verification : INT <<PK>>
+  --
+  email : VARCHAR(100)
+  token : VARCHAR(64) <<UQ>>
+  entity_type : ENUM
+  entity_id : INT
+  verified : TINYINT
+  expires_at : DATETIME
+}
+
+entity "audit_logs" as audit {
+  * id_log : INT <<PK>>
+  --
+  user_id : INT
+  user_email : VARCHAR(100)
+  action : VARCHAR(100)
+  entity_type : VARCHAR(100)
+  entity_id : INT
+  status : ENUM
+  timestamp : DATETIME
+}
+
+login |o--o{ appt : "idlogin"
+login |o--o{ visitor : "idlogin"
+
+note as N1
+  Couplage applicatif (non contraint en base) :
+  • appointments.service  →  services.name (libellé)
+  • email_verifications / audit_logs : référence
+    polymorphe via (entity_type, entity_id).
+end note
+
+svc .. N1
+audit .. N1
+ev .. N1
+@enduml

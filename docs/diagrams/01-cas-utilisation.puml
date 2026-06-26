@@ -1,0 +1,58 @@
+@startuml 01-cas-utilisation
+!include style.puml
+title Diagramme de cas d'utilisation — Centre Médical Protestant de Bafoussam
+left to right direction
+
+actor "Visiteur" as Visiteur
+actor "Patient" as Patient
+actor "Administrateur" as Admin
+actor "Service e-mail\n(SMTP)" as Mail
+
+Patient --|> Visiteur
+
+rectangle "Site web CMPB" {
+  usecase "Consulter l'accueil" as UC_Home
+  usecase "Consulter les services médicaux" as UC_Services
+  usecase "Consulter À propos" as UC_About
+  usecase "Prendre un rendez-vous" as UC_Rdv
+  usecase "Envoyer un message de contact" as UC_Contact
+  usecase "Créer un compte" as UC_Register
+  usecase "Vérifier son adresse e-mail" as UC_Verify
+  usecase "Se connecter" as UC_Login
+  usecase "Accéder à l'espace patient" as UC_Espace
+
+  usecase "Se connecter (administration)" as UC_AdminLogin
+  usecase "Consulter le tableau de bord" as UC_Dashboard
+  usecase "Gérer les rendez-vous" as UC_GestRdv
+  usecase "Gérer les messages" as UC_GestMsg
+  usecase "Gérer les services" as UC_GestSvc
+  usecase "Suivre les visiteurs" as UC_Visiteurs
+  usecase "Consulter les journaux d'audit" as UC_Audit
+}
+
+Visiteur --> UC_Home
+Visiteur --> UC_Services
+Visiteur --> UC_About
+Visiteur --> UC_Rdv
+Visiteur --> UC_Contact
+Visiteur --> UC_Register
+
+Patient --> UC_Login
+Patient --> UC_Espace
+
+Admin --> UC_AdminLogin
+Admin --> UC_Dashboard
+Admin --> UC_GestRdv
+Admin --> UC_GestMsg
+Admin --> UC_GestSvc
+Admin --> UC_Visiteurs
+Admin --> UC_Audit
+
+UC_Register ..> UC_Verify : <<include>>
+UC_Espace ..> UC_Login : <<include>>
+UC_Dashboard ..> UC_AdminLogin : <<include>>
+
+UC_Rdv ..> Mail : <<include>>
+UC_Contact ..> Mail : <<include>>
+UC_Verify ..> Mail : <<include>>
+@enduml

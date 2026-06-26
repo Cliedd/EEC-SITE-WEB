@@ -1,0 +1,115 @@
+@startuml 02-classes
+!include style.puml
+title Diagramme de classes — Modèle du domaine (CMPB)
+
+class User <<login>> {
+  + idlogin : int <<PK>>
+  --
+  name_surName : varchar(100)
+  email : varchar(100) <<unique>>
+  telephone : varchar(20)
+  mot_de_passe : varchar(255)
+  actif : tinyint
+  email_verified : tinyint
+  date_creation : datetime
+}
+
+class AdminUser <<admin_users>> {
+  + id_admin : int <<PK>>
+  --
+  email : varchar(100) <<unique>>
+  mot_de_passe : varchar(255)
+  nom : varchar(100)
+  role : varchar(50)
+  actif : tinyint
+  derniere_connexion : datetime
+}
+
+class Appointment <<appointments>> {
+  + id_appointment : int <<PK>>
+  --
+  idlogin : int
+  name_surName : varchar(100)
+  email : varchar(100)
+  telephone : varchar(20)
+  date_appointment : datetime
+  service : varchar(191)
+  raison : text
+  status : enum
+  confirmation_token : varchar(64)
+}
+
+class Contact <<contacts>> {
+  + id_contact : int <<PK>>
+  --
+  name_surName : varchar(100)
+  email : varchar(100)
+  telephone : varchar(20)
+  objet : varchar(255)
+  message : text
+  status : enum
+}
+
+class Service <<services>> {
+  + id : int <<PK>>
+  --
+  name : varchar(191) <<unique>>
+  description : text
+  specialite : varchar(100)
+  icon : varchar(100)
+  is_active : tinyint
+  ordre_affichage : int
+}
+
+class Visitor <<visitors>> {
+  + id_visitor : int <<PK>>
+  --
+  idlogin : int
+  name_surName : varchar(100)
+  email : varchar(100)
+  visitor_type : enum
+  source_page : varchar(255)
+  ip_address : varchar(45)
+  date_visit : datetime
+}
+
+class EmailVerification <<email_verifications>> {
+  + id_verification : int <<PK>>
+  --
+  email : varchar(100)
+  token : varchar(64) <<unique>>
+  entity_type : enum
+  entity_id : int
+  verified : tinyint
+  expires_at : datetime
+}
+
+class AuditLog <<audit_logs>> {
+  + id_log : int <<PK>>
+  --
+  user_id : int
+  user_email : varchar(100)
+  action : varchar(100)
+  entity_type : varchar(100)
+  entity_id : int
+  status : enum
+  timestamp : datetime
+}
+
+User "1" --> "0..*" Appointment : passe
+User "1" --> "0..*" Visitor : génère
+Appointment "0..*" ..> "1" Service : concerne
+AdminUser "1" --> "0..*" Service : administre
+
+note right of AuditLog
+  Journalisation polymorphe :
+  (entity_type, entity_id) référence
+  l'entité concernée par l'action.
+end note
+
+note right of EmailVerification
+  Vérification polymorphe :
+  (entity_type, entity_id) cible un
+  compte patient, admin ou contact.
+end note
+@enduml

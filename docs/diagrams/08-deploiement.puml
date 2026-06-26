@@ -1,0 +1,40 @@
+@startuml 08-deploiement
+!include style.puml
+title Diagramme de déploiement — Infrastructure CMPB
+
+node "Poste client" as Client {
+  artifact "Navigateur web\n(SPA React)" as Browser
+}
+
+node "Vercel\n(CDN mondial)" as Vercel {
+  artifact "Frontend statique\n(build Vite : HTML/CSS/JS)" as Front
+  artifact "Règle de réécriture\n/api/* -> Railway" as Rewrite
+}
+
+node "Railway" as Railway {
+  node "Service : backend" as SvcBack {
+    artifact "API FastAPI\n(uvicorn, Python 3.12)" as Api
+  }
+  node "Service : MySQL" as SvcDb {
+    database "MySQL 9.4\n(base eecbafoussam / railway)" as Db
+  }
+}
+
+node "Fournisseur e-mail" as MailNode {
+  artifact "Serveur SMTP" as Smtp
+}
+
+Browser --> Front : HTTPS\n(chargement de la SPA)
+Browser --> Rewrite : HTTPS  /api/*
+Rewrite --> Api : HTTPS
+Api --> Db : TCP 3306\n(réseau privé Railway)
+Api --> Smtp : SMTP / TLS 587
+
+note right of Railway
+  Projet Railway « dependable-serenity ».
+  Backend et base dans le même projet :
+  communication par le réseau privé
+  (mysql.railway.internal), proxy inverse
+  Vercel pour /api/*.
+end note
+@enduml

@@ -1,0 +1,41 @@
+@startuml 04-sequence-rdv
+!include style.puml
+title Diagramme de séquence — Prise de rendez-vous
+
+actor "Patient" as P
+participant "Frontend\nReact (Vercel)" as F
+participant "API FastAPI\n(Railway)" as A
+database "MySQL\n(Railway)" as DB
+participant "Service e-mail\n(SMTP)" as M
+
+autonumber
+
+P -> F : Remplit le formulaire de rendez-vous
+activate F
+F -> F : Validation des champs (client)
+F -> A : POST /api/appointments\n{ nom, email, téléphone, date, service, raison }
+activate A
+
+A -> A : Validation Pydantic + rate limiting
+A -> DB : INSERT appointment (status = "pending")
+activate DB
+A -> DB : INSERT visitor (type = "appointment_request")
+A -> DB : COMMIT
+DB --> A : id_appointment
+deactivate DB
+
+A -> DB : INSERT audit_log (APPOINTMENT_CREATE)
+A -->> M : Envoi e-mail de confirmation\n(tâche d'arrière-plan)
+A --> F : 201 Created (rendez-vous créé)
+deactivate A
+
+F --> P : Message de succès\n« Demande enregistrée »
+deactivate F
+
+M --> P : E-mail de confirmation de réception
+
+note over A, DB
+  Le rendez-vous reste « en attente »
+  jusqu'à validation par un administrateur.
+end note
+@enduml

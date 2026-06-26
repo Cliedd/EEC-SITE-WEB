@@ -1,0 +1,85 @@
+' ============================================================
+'  Charte graphique commune — Diagrammes CMPB
+'  Style sobre et professionnel, traits orthogonaux (droits)
+' ============================================================
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundCorner 6
+skinparam defaultFontName "DejaVu Sans"
+skinparam defaultFontSize 13
+skinparam linetype ortho
+skinparam nodesep 55
+skinparam ranksep 60
+
+skinparam ArrowColor #34495E
+skinparam ArrowThickness 1.1
+skinparam ArrowFontColor #2C3E50
+skinparam ArrowFontSize 12
+
+skinparam TitleFontSize 18
+skinparam TitleFontColor #1F2D3D
+skinparam TitleFontStyle bold
+
+skinparam actor {
+  BackgroundColor #0E7C66
+  BorderColor #0B5D4D
+  FontColor #14342B
+}
+skinparam usecase {
+  BackgroundColor #F4F7F6
+  BorderColor #1F2D3D
+  FontColor #1F2D3D
+  BorderThickness 1
+}
+skinparam class {
+  BackgroundColor #F4F7F6
+  HeaderBackgroundColor #DCE7E4
+  BorderColor #1F2D3D
+  FontColor #14342B
+  AttributeFontColor #2D3748
+  AttributeFontSize 12
+  BorderThickness 1
+}
+skinparam entity {
+  BackgroundColor #F4F7F6
+  BorderColor #1F2D3D
+  FontColor #14342B
+}
+skinparam component {
+  BackgroundColor #F4F7F6
+  BorderColor #1F2D3D
+  FontColor #1F2D3D
+  BorderThickness 1
+}
+skinparam package {
+  BackgroundColor #FBFCFC
+  BorderColor #7F8C8D
+  FontColor #1F2D3D
+}
+skinparam rectangle {
+  BackgroundColor #FBFCFC
+  BorderColor #7F8C8D
+  FontColor #1F2D3D
+}
+skinparam node {
+  BackgroundColor #EFF3F2
+  BorderColor #1F2D3D
+  FontColor #1F2D3D
+}
+skinparam database {
+  BackgroundColor #F4F7F6
+  BorderColor #1F2D3D
+  FontColor #14342B
+}
+skinparam sequence {
+  ArrowColor #34495E
+  LifeLineBorderColor #95A5A6
+  LifeLineBackgroundColor #EFF3F2
+  ParticipantBorderColor #0B5D4D
+  ParticipantBackgroundColor #0E7C66
+  ParticipantFontColor #FFFFFF
+  ActorBorderColor #0B5D4D
+  ActorBackgroundColor #0E7C66
+  BoxBorderColor #95A5A6
+  BoxBackgroundColor #F8FAFA
+}

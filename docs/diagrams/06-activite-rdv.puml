@@ -1,0 +1,39 @@
+@startuml 06-activite-rdv
+!include style.puml
+title Diagramme d'activité — Cycle de vie d'un rendez-vous
+
+|Patient|
+start
+:Remplir le formulaire de rendez-vous;
+:Soumettre la demande;
+
+|Système (API)|
+if (Données valides ?) then (non)
+  :Retourner les erreurs de validation;
+  |Patient|
+  :Corriger les champs;
+  detach
+else (oui)
+  :Enregistrer le rendez-vous\n(statut = en attente);
+  :Tracer le visiteur + journal d'audit;
+  :Envoyer l'e-mail de confirmation;
+endif
+
+|Administrateur|
+:Consulter les rendez-vous en attente;
+if (Décision) then (Confirmer)
+  :Statut = confirmé;
+elseif (Reporter / Terminer) then (Terminer)
+  :Statut = terminé;
+else (Annuler)
+  :Statut = annulé;
+endif
+
+|Système (API)|
+:Mettre à jour le statut en base;
+:Notifier le patient par e-mail;
+
+|Patient|
+:Recevoir la notification;
+stop
+@enduml

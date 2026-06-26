@@ -1,0 +1,42 @@
+@startuml 07-composants
+!include style.puml
+title Diagramme de composants — Architecture applicative CMPB
+
+package "Frontend — React + TypeScript (Vercel)" as FE {
+  component "Pages\n(Accueil, Services, RDV,\nContact, Espace patient, Admin)" as Pages
+  component "Composants UI\n(Layout, HeroCarousel, ...)" as UI
+  component "Hooks\n(useAuth, useServices, ...)" as Hooks
+  component "Services API\n(axios apiClient)" as ApiClient
+  component "AuthContext\n(JWT / localStorage)" as Auth
+}
+
+package "Backend — FastAPI + SQLAlchemy (Railway)" as BE {
+  component "Routers\n(auth, appointments,\ncontacts, services, admin)" as Routers
+  component "Middleware\n(CORS, sécurité, rate limit)" as MW
+  component "Schemas Pydantic\n(validation)" as Schemas
+  component "Utils\n(security, audit, email)" as Utils
+  component "Models SQLAlchemy\n(ORM)" as Models
+}
+
+database "MySQL\n(Railway)" as DB
+component "Service e-mail\n(SMTP)" as SMTP
+
+Pages --> Hooks
+Pages --> UI
+Pages --> Auth
+Hooks --> ApiClient
+Auth --> ApiClient
+
+ApiClient ..> MW : HTTPS  /api/*\n(JSON + JWT Bearer)
+MW --> Routers
+Routers --> Schemas
+Routers --> Utils
+Routers --> Models
+Models --> DB : SQL (pymysql)
+Utils ..> SMTP : SMTP (TLS)
+
+note bottom of ApiClient
+  Vercel réécrit /api/* vers le backend Railway
+  (même origine côté navigateur, sans CORS).
+end note
+@enduml
