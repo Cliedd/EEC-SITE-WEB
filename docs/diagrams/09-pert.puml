@@ -1,0 +1,41 @@
+@startuml 09-pert
+!include style.puml
+title Diagramme PERT — Réseau des antériorités et chemin critique
+left to right direction
+
+rectangle "Début\nS0" as START #D5F5E3
+rectangle "**A . Étude des besoins**\ndurée 2 sem . marge 0\ntôt S0->S2 . tard S0->S2" as A #F5B7B1
+rectangle "**B . Conception UML & maquettes**\ndurée 2 sem . marge 0\ntôt S2->S4 . tard S2->S4" as B #F5B7B1
+rectangle "**C . Conception base de données**\ndurée 1 sem . marge 1\ntôt S2->S3 . tard S3->S4" as C #FCF3CF
+rectangle "**D . Environnement & architecture**\ndurée 1 sem . marge 0\ntôt S4->S5 . tard S4->S5" as D #F5B7B1
+rectangle "**E . Développement backend (API)**\ndurée 4 sem . marge 0\ntôt S5->S9 . tard S5->S9" as E #F5B7B1
+rectangle "**F . Développement frontend (React)**\ndurée 4 sem . marge 0\ntôt S5->S9 . tard S5->S9" as F #F5B7B1
+rectangle "**G . Intégration & connexion API**\ndurée 2 sem . marge 0\ntôt S9->S11 . tard S9->S11" as G #F5B7B1
+rectangle "**H . Tests & corrections**\ndurée 2 sem . marge 0\ntôt S11->S13 . tard S11->S13" as H #F5B7B1
+rectangle "**I . Déploiement (Vercel + Railway)**\ndurée 1 sem . marge 0\ntôt S13->S14 . tard S13->S14" as I #F5B7B1
+rectangle "**J . Rédaction du mémoire**\ndurée 2 sem . marge 1\ntôt S11->S13 . tard S12->S14" as J #FCF3CF
+rectangle "**K . Préparation soutenance**\ndurée 1 sem . marge 0\ntôt S14->S15 . tard S14->S15" as K #F5B7B1
+rectangle "Fin\nS15" as FIN #D5F5E3
+
+START -[#C0392B,bold]-> A
+A     -[#C0392B,bold]-> B
+A     --> C
+B     -[#C0392B,bold]-> D
+C     --> D
+D     -[#C0392B,bold]-> E
+D     -[#C0392B,bold]-> F
+E     -[#C0392B,bold]-> G
+F     -[#C0392B,bold]-> G
+G     -[#C0392B,bold]-> H
+G     --> J
+H     -[#C0392B,bold]-> I
+I     -[#C0392B,bold]-> K
+J     --> K
+K     -[#C0392B,bold]-> FIN
+
+legend bottom
+  Chaque tâche : code . libellé | durée . marge | dates au plus tôt et au plus tard.
+  <back:#F5B7B1> Rouge </back> = chemin critique (marge nulle) : A B D E F G H I K, flèches rouges.
+  <back:#FCF3CF> Jaune </back> = tâche avec marge (C, J).  Durée totale du projet : 15 semaines.
+endlegend
+@enduml

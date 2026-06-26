@@ -1,0 +1,63 @@
+@startgantt 10-gantt
+<style>
+ganttDiagram {
+  task {
+    FontName "DejaVu Sans"
+    FontSize 12
+    FontColor #14342B
+    BackgroundColor #0E7C66
+    LineColor #0B5D4D
+  }
+  milestone {
+    FontColor #7B241C
+    BackgroundColor #C0392B
+    LineColor #7B241C
+  }
+  separator {
+    FontColor #1F2D3D
+    BackgroundColor #EFF3F2
+    LineColor #95A5A6
+  }
+}
+</style>
+title Diagramme de Gantt — Planning du projet CMPB
+printscale weekly
+project starts 2026-02-02
+
+[A - Étude des besoins] lasts 2 weeks
+[B - Conception UML et maquettes] lasts 2 weeks
+[C - Conception base de données] lasts 1 weeks
+[D - Environnement et architecture] lasts 1 weeks
+[E - Développement backend (API)] lasts 4 weeks
+[F - Développement frontend (React)] lasts 4 weeks
+[G - Intégration et connexion API] lasts 2 weeks
+[H - Tests et corrections] lasts 2 weeks
+[I - Déploiement (Vercel + Railway)] lasts 1 weeks
+[J - Rédaction du mémoire] lasts 2 weeks
+[K - Préparation soutenance] lasts 1 weeks
+
+[B - Conception UML et maquettes] starts at [A - Étude des besoins]'s end
+[C - Conception base de données] starts at [A - Étude des besoins]'s end
+[D - Environnement et architecture] starts at [B - Conception UML et maquettes]'s end
+[E - Développement backend (API)] starts at [D - Environnement et architecture]'s end
+[F - Développement frontend (React)] starts at [D - Environnement et architecture]'s end
+[G - Intégration et connexion API] starts at [E - Développement backend (API)]'s end
+[H - Tests et corrections] starts at [G - Intégration et connexion API]'s end
+[I - Déploiement (Vercel + Railway)] starts at [H - Tests et corrections]'s end
+[J - Rédaction du mémoire] starts at [G - Intégration et connexion API]'s end
+[K - Préparation soutenance] starts at [I - Déploiement (Vercel + Railway)]'s end
+
+[Soutenance] happens at [K - Préparation soutenance]'s end
+
+[A - Étude des besoins] is colored in #C0392B
+[B - Conception UML et maquettes] is colored in #C0392B
+[D - Environnement et architecture] is colored in #C0392B
+[E - Développement backend (API)] is colored in #C0392B
+[F - Développement frontend (React)] is colored in #C0392B
+[G - Intégration et connexion API] is colored in #C0392B
+[H - Tests et corrections] is colored in #C0392B
+[I - Déploiement (Vercel + Railway)] is colored in #C0392B
+[K - Préparation soutenance] is colored in #C0392B
+
+caption Tâches en rouge = chemin critique (15 semaines). Tâches en vert (C, J) = avec marge.
+@endgantt

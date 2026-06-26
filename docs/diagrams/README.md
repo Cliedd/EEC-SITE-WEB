@@ -17,6 +17,8 @@ palette sobre).
 | 6 | Activité — Cycle de vie d'un rendez-vous | `06-activite-rdv.puml` | `svg/06-…` · `png/06-…` |
 | 7 | Composants — Architecture applicative | `07-composants.puml` | `svg/07-…` · `png/07-…` |
 | 8 | Déploiement — Infrastructure | `08-deploiement.puml` | `svg/08-…` · `png/08-…` |
+| 9 | PERT — Réseau des antériorités (chemin critique) | `09-pert.puml` | `svg/09-…` · `png/09-…` |
+| 10 | Gantt — Planning du projet | `10-gantt.puml` | `svg/10-…` · `png/10-…` |
 
 ## Régénérer les images
 
@@ -25,10 +27,10 @@ Prérequis : **Java**, **Graphviz** (`dot`) et **plantuml.jar**.
 ```bash
 cd docs/diagrams
 # Vérifier la syntaxe
-java -jar plantuml.jar -checkonly -failfast2 0*.puml
+java -jar plantuml.jar -checkonly -failfast2 [0-9][0-9]-*.puml
 # Générer SVG + PNG
-java -jar plantuml.jar -tsvg -o svg 0*.puml
-java -jar plantuml.jar -tpng -Sdpi=160 -o png 0*.puml
+java -jar plantuml.jar -tsvg -o svg [0-9][0-9]-*.puml
+java -jar plantuml.jar -tpng -Sdpi=160 -o png [0-9][0-9]-*.puml
 ```
 
 > Astuce : on peut aussi coller le contenu d'un `.puml` sur https://www.plantuml.com/plantuml

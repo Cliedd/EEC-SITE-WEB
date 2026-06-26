@@ -1,0 +1,3 @@
+# Images rendues à la racine du dossier (doublons) — on ne versionne que png/ et svg/
+/*.png
+/*.svg
