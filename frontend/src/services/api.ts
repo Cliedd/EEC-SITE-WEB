@@ -24,14 +24,21 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
-// Redirect to login on 401
+// Déconnexion sur 401 — UNIQUEMENT pour une session expirée sur une vraie ressource.
+// On n'agit PAS sur les échecs de connexion (gérés par la page Login) pour éviter
+// un rechargement brutal en pleine séquence de login (essai admin puis patient),
+// et on ne redirige pas si l'on est déjà sur /login (évite la boucle).
 apiClient.interceptors.response.use(
   (res) => res,
   (error) => {
-    if (error.response?.status === 401) {
+    const url: string = error.config?.url ?? "";
+    const isAuthRequest = url.includes("/auth/login") || url.includes("/auth/admin/login");
+    if (error.response?.status === 401 && !isAuthRequest) {
       localStorage.removeItem("token");
       localStorage.removeItem("auth");
-      window.location.href = "/login";
+      if (window.location.pathname !== "/login") {
+        window.location.href = "/login";
+      }
     }
     return Promise.reject(error);
   }
