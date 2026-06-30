@@ -29,23 +29,6 @@ const features = [
   },
 ];
 
-const specialties = [
-  "Médecine interne",
-  "Maternité",
-  "Pédiatrie/Neonatalogie",
-  "Chirurgie",
-  "Urgences",
-  "Imagerie médicale",
-  "Soins intensifs",
-  "Neurologie",
-  "Nutrition",
-  "Kinesitherapeute",
-  "Pharmacie",
-  "Vaccination",
-  "UPEC",
-  "Administration",
-];
-
 export default function Home() {
   const [heroDescription, setHeroDescription] = useState(
     "Soins de qualité pour tous — au cœur de Bafoussam depuis 1978"
