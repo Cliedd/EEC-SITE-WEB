@@ -69,14 +69,18 @@ async def validation_exception_handler(request: Request, exc):
     )
 
 
-# Handler 500 — retourne le message d'erreur en JSON (utile pour debug)
+# Handler 500 — ne JAMAIS exposer la trace en production (fuite d'informations).
 @app.exception_handler(500)
 async def internal_error_handler(request: Request, exc):
-    import traceback
-    err = traceback.format_exc()
+    if IS_DEV:
+        import traceback
+        return JSONResponse(
+            status_code=500,
+            content={"detail": str(exc), "trace": traceback.format_exc()},
+        )
     return JSONResponse(
         status_code=500,
-        content={"detail": str(exc), "trace": err[-1000:] if not IS_DEV else err},
+        content={"detail": "Une erreur interne est survenue. Veuillez réessayer plus tard."},
     )
 
 
@@ -92,15 +96,5 @@ app.include_router(admin.router, prefix="/api")
 @app.get("/api/health")
 def health():
     return {"status": "ok", "service": "EEC Centre Médical API"}
-
-
-@app.get("/api/debug")
-def debug():
-    return {
-        "database_url_set": bool(settings.DATABASE_URL),
-        "secret_key_set": settings.SECRET_KEY != "fallback-secret-change-in-production",
-        "environment": settings.ENVIRONMENT,
-        "frontend_url": settings.FRONTEND_URL,
-    }
 
 
