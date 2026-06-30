@@ -39,7 +39,7 @@ export default function About() {
       {/* Hero */}
       <div
         className="relative h-64 flex items-center justify-center bg-cover bg-center"
-        style={{ backgroundImage: "url('/ASSETS/IMAGES/imgEnter.JPG')" }}
+        style={{ backgroundImage: "url('/ASSETS/IMAGES/IMG-service3.jpg')" }}
       >
         <div className="absolute inset-0 bg-primary-900/70" />
         <div className="relative text-center text-white px-4">

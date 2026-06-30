@@ -44,7 +44,6 @@ const specialties = [
   "Vaccination",
   "UPEC",
   "Administration",
-  "Aumonerie",
 ];
 
 export default function Home() {
@@ -264,17 +263,6 @@ export default function Home() {
             </Button>
           </Link>
         </div>
-
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 mb-10">
-          {specialties.map((service) => (
-            <div key={service} className="rounded-2xl bg-white px-4 py-5 text-center shadow-sm">
-              <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-                <span className="text-base font-bold">✓</span>
-              </div>
-              <p className="text-sm font-medium text-gray-900">{service}</p>
-            </div>
-          ))}
-        </div>
       </section>
 
       {/* CTA */}
@@ -294,7 +282,7 @@ export default function Home() {
             <a href="tel:+237699573569">
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-primary-400">
                 <Phone className="h-5 w-5" />
-                +237 93 03 67 12
+                +237 693 03 67 12
               </Button>
             </a>
           </div>
