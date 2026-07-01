@@ -29,7 +29,7 @@ export default function About() {
     { period: "1997 – 2000", name: "M. Kamdem Samuel"      },
     { period: "2000 – 2010", name: "Dr Nana Martial"       },
     { period: "2010 – 2013", name: "Dr Ndensi Jean Paul"   },
-    { period: "2013 – 2014", name: "Dr Tchamou Michel"     },
+    { period: "2013 – 2014", name: "Dr Tchouamou Michel"     },
     { period: "2014 – 2020", name: "Dr Chemgne Nadine"     },
     { period: "2020 – Auj.", name: "Dr Bonny Dalle Mouanjo Cyrille" },
   ];

@@ -36,6 +36,7 @@ export default function Services() {
               "Imagerie médicale",
               "Soins intensifs",
               "Neurologie",
+              "Laboratoire",
               "Nutrition",
               "Kinesitherapeute",
               "Pharmacie",
