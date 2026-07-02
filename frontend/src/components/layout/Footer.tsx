@@ -37,7 +37,7 @@ export function Footer() {
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">Nos Services</h3>
             <ul className="space-y-2 text-sm">
-              {["Médecine interne", "Maternité", "Pédiatrie/Neonatalogie","Chirurgie", "Urgences","Imagerie médicale", "Soins intensifs","Neurologie", "Nutrition","Kinesitherapeute","Pharmacie","Vaccination","UPEC","Administration","Aumonerie"].map((s) => (
+              {["Médecine interne", "Maternité", "Pédiatrie/Neonatalogie","Chirurgie", "Urgences","Imagerie médicale", "Soins intensifs","Neurologie","Laboratoire", "Nutrition","Kinesitherapeute","Pharmacie","Vaccination","UPEC","Administration","Aumonerie"].map((s) => (
                 <li key={s}>
                   <Link to="/services" className="hover:text-primary-400 transition-colors">
                     {s}
